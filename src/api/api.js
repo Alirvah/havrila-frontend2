@@ -6,7 +6,7 @@ import tokenStorage from "../helper/tokenStorage";
 axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    let token = localStorage.getItem("token");
+    let token = sessionStorage.getItem("token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }

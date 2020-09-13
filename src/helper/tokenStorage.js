@@ -4,26 +4,26 @@ export default class TokenStorage {
   }
 
   static clear() {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
   }
 
   static setToken(token) {
-    return localStorage.setItem("token", JSON.stringify(token));
+    return sessionStorage.setItem("token", JSON.stringify(token));
   }
 
   static getToken() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     return token && token;
   }
 
   static getRefreshToken() {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = JSON.parse(sessionStorage.getItem("token"));
     return token ? token.refresh : false;
   }
 
   static setRefreshToken(token) {
-    const oldToken = JSON.parse(localStorage.getItem("token"));
+    const oldToken = JSON.parse(sessionStorage.getItem("token"));
     const refreshedToken = { access: token.access, refresh: oldToken.refresh };
-    return localStorage.setItem("token", JSON.stringify(refreshedToken));
+    return sessionStorage.setItem("token", JSON.stringify(refreshedToken));
   }
 }
