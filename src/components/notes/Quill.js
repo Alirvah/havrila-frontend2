@@ -14,6 +14,8 @@ const Quill = () => {
   const text = useSelector((store) => store.quill);
   const notes = useSelector((store) => store.notes);
   const active_note = useSelector((store) => store.active_note);
+  const notebooks = useSelector((store) => store.notebooks);
+  const active_notebook = useSelector((store) => store.active_notebook);
 
   const dispatch = useDispatch();
 
@@ -21,12 +23,6 @@ const Quill = () => {
     readonly: true,
     saved: false,
   });
-
-  useEffect(() => {
-    // axios.get(URL + API.NOTES + "/" + 1).then((r) => {
-    //   r.data && setState({ ...state, text: r.data.content });
-    // });
-  }, []);
 
   const modules = {
     toolbar: [
@@ -60,14 +56,57 @@ const Quill = () => {
         dispatch({ type: "SET_REFRESH" });
       })
       .catch((e) => alert("Note was not saved!!! \n" + e));
-    setState({ ...state, readonly: true });
+  };
+
+  const handleDelete = () => {
+    if (notes.length > 0) {
+      if (
+        window.confirm(
+          `Are you really want to delete '${notes[active_note].title}' notebook?`
+        )
+      ) {
+        axios
+          .delete(URL + API.NOTES + "/" + notes[active_note].id + "/")
+          .then((e) => {
+            dispatch({ type: "SET_QUILL", payload: "" });
+            dispatch({ type: "SET_REFRESH" });
+          })
+          .catch((e) => alert("Note was not saved!!! \n" + e));
+      }
+    } else {
+      window.confirm(
+        `Are you really want to delete '${notebooks[active_notebook].title}' notebook?`
+      );
+      axios
+        .delete(URL + API.NOTEBOOK + "/" + notebooks[active_notebook].id + "/")
+        .then((e) => {
+          dispatch({ type: "ACTIVE_NOTEBOOK", payload: 0 });
+          dispatch({ type: "SET_REFRESH" });
+        })
+        .catch((e) => alert("Note was not saved!!! \n" + e));
+    }
   };
 
   if (!state) return <div>Loading...</div>;
 
+  if (notebooks.length === 0) return <div></div>;
+
+  if (notes.length <= 0 && notebooks.length != 0)
+    return (
+      <Button
+        type="text"
+        variant="outlined"
+        color="secondary"
+        disableElevation
+        onClick={handleDelete}
+      >
+        delete
+      </Button>
+    );
+
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid item xs={11}>
         <Button
           type="text"
           variant="contained"
@@ -76,6 +115,17 @@ const Quill = () => {
           onClick={handleSave}
         >
           save
+        </Button>
+      </Grid>
+      <Grid item xs={1}>
+        <Button
+          type="text"
+          variant="outlined"
+          color="secondary"
+          disableElevation
+          onClick={handleDelete}
+        >
+          delete
         </Button>
       </Grid>
       <Grid item xs={12}>
@@ -96,7 +146,7 @@ const Quill = () => {
             placeholder="Compose an epic..."
             theme="snow"
             readOnly={state.readonly}
-          />{" "}
+          />
         </div>
       </Grid>
     </Grid>

@@ -12,32 +12,6 @@ import { getApi } from "../../api/api";
 import { makeStyles } from "@material-ui/core/styles";
 import { postApi } from "../../api/api";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
 function a11yProps(index) {
   return {
     id: `vertical-tab-${index}`,
@@ -63,20 +37,36 @@ const useStyles = makeStyles((theme) => ({
 const Notes = () => {
   const notes = useSelector((store) => store.notes);
   const active_note = useSelector((store) => store.active_note);
+  const notebooks = useSelector((store) => store.notebooks);
+  const active_notebook = useSelector((store) => store.active_notebook);
 
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const handleChange = (event, newValue) => {
-    dispatch({ type: "ACTIVE_NOTE", payload: newValue });
-    dispatch({ type: "SET_QUILL", payload: notes[newValue].content });
+  const newNote = () => {
+    const title = prompt("Note:");
+    axios
+      .post(URL + API.NOTES + "/", {
+        title: title,
+        content: "<p><br></p>".repeat(20),
+        starred: false,
+        notebook:
+          URL + API.NOTEBOOK + "/" + notebooks[active_notebook].id + "/",
+      })
+      .then((e) => {
+        dispatch({ type: "ACTIVE_NOTE", payload: 0 });
+        dispatch({ type: "SET_REFRESH" });
+      });
   };
 
-  useEffect(() => {
-    // axios.get(URL + API.NOTES + "?notebook=" + 1).then((r) => {
-    //   r.data && setNotes(r.data);
-    // });
-  }, []);
+  const handleChange = (event, newValue) => {
+    if (notes.length > newValue) {
+      dispatch({ type: "ACTIVE_NOTE", payload: newValue });
+      dispatch({ type: "SET_QUILL", payload: notes[newValue].content });
+    } else {
+      newNote();
+    }
+  };
 
   if (!notes) return <div>Loading...</div>;
 
@@ -100,7 +90,9 @@ const Notes = () => {
               {...a11yProps(e.id)}
             />
           ))}
-        <Tab className={classes.button} label="+" {...a11yProps(999)} />
+        {notebooks.length > 0 && (
+          <Tab className={classes.button} label="+" {...a11yProps(999)} />
+        )}
       </Tabs>
     </div>
   );

@@ -11,18 +11,21 @@ import axios from "axios";
 export default function Note() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const refresh = useSelector((store) => store.refresh);
+  const active_notebook = useSelector((store) => store.active_notebook);
 
   useEffect(() => {
     axios.get(URL + API.NOTEBOOK).then((r) => {
       if (r.data) {
         dispatch({ type: "SET_NOTEBOOKS", payload: r.data.reverse() });
+        dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });
         setLoading(false);
       }
     });
-  }, []);
+  }, [refresh]);
 
   if (loading) {
-    return <>loading...</>;
+    return <>loading..</>;
   }
 
   return (

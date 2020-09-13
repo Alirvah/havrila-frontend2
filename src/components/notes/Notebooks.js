@@ -6,12 +6,13 @@ import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import axios from "axios";
-import { getApi } from "../../api/api";
-import { postApi } from "../../api/api";
 
 const Notebooks = () => {
   const notebooks = useSelector((store) => store.notebooks);
   const active_notebook = useSelector((store) => store.active_notebook);
+  const notes = useSelector((store) => store.notes);
+  const active_note = useSelector((store) => store.active_note);
+
   const refresh = useSelector((store) => store.refresh);
 
   const [loading, setLoading] = useState(true);
@@ -19,46 +20,52 @@ const Notebooks = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // axios.get(URL + API.NOTEBOOK).then((r) => {
-    //   r.data && setNotebooks(r.data);
-    // });
-    axios.get(URL + API.NOTES + "?notebook=" + 1).then((re) => {
-      if (re.data) {
-        dispatch({ type: "SET_NOTES", payload: re.data });
-        dispatch({ type: "SET_QUILL", payload: re.data[0].content });
-        setLoading(false);
-
-        //dispatch({ type: "ACTIVE_NOTE", payload: active_note });
-        // axios.get(URL + API.NOTES + "/" + 1).then((res) => {
-        //   if (res.data) {
-        //     dispatch({ type: "SET_QUILL", payload: res.data.content });
-        //     setLoading(false);
-        //   }
-        // });
-      }
-    });
+    if (notebooks.length > 0) {
+      axios
+        .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
+        .then((re) => {
+          if (0 < re.data.length) {
+            dispatch({ type: "SET_NOTES", payload: re.data });
+            dispatch({
+              type: "SET_QUILL",
+              payload: re.data[0].content,
+            });
+          } else {
+            dispatch({ type: "SET_NOTES", payload: [] });
+          }
+        });
+    }
+    setLoading(false);
   }, [refresh]);
 
-  const handleChange = (event, newValue) => {
-    dispatch({ type: "ACTIVE_NOTEBOOK", payload: newValue });
+  const addNotebook = () => {
+    const title = prompt("Note:");
     axios
-      .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
-      .then((re) => {
-        if (re.data) {
-          dispatch({ type: "SET_NOTES", payload: re.data });
-          dispatch({ type: "ACTIVE_NOTE", payload: 0 });
-          dispatch({ type: "SET_QUILL", payload: re.data[0].content });
-          setLoading(false);
+      .post(URL + API.NOTEBOOK + "/", { title: title })
+      .then((r) => {
+        dispatch({ type: "SET_REFRESH" });
+      })
+      .catch((e) => alert(e));
+  };
 
-          //dispatch({ type: "ACTIVE_NOTE", payload: active_note });
-          // axios.get(URL + API.NOTES + "/" + 1).then((res) => {
-          //   if (res.data) {
-          //     dispatch({ type: "SET_QUILL", payload: res.data.content });
-          //     setLoading(false);
-          //   }
-          // });
-        }
-      });
+  const handleChange = (event, newValue) => {
+    if (notebooks.length > newValue) {
+      dispatch({ type: "ACTIVE_NOTEBOOK", payload: newValue });
+      axios
+        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
+        .then((re) => {
+          if (re.data.length > 0) {
+            dispatch({ type: "SET_NOTES", payload: re.data });
+            dispatch({ type: "ACTIVE_NOTE", payload: 0 });
+            dispatch({ type: "SET_QUILL", payload: re.data[0].content });
+          } else {
+            dispatch({ type: "SET_NOTES", payload: [] });
+            dispatch({ type: "SET_QUILL", payload: "<p><br></p>".repeat(20) });
+          }
+        });
+    } else {
+      addNotebook();
+    }
   };
 
   if (loading) return <div>Loading...</div>;
