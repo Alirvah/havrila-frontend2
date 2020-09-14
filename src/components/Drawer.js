@@ -111,7 +111,7 @@ function ResponsiveDrawer(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   const logout = () => {
-    window.localStorage.clear();
+    localStorage.clear();
     dispatch({ type: "LOGOUT" });
   };
 

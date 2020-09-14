@@ -6,9 +6,11 @@ import tokenStorage from "../helper/tokenStorage";
 axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    let token = window.localStorage.getItem("token");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+    let token = localStorage.getItem("token");
+    if (true) {
+      const tkn =
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjAwMTE2OTA1LCJqdGkiOiJhNGM4OWFiYzRjOTQ0YzYzYjkzNmYwODAwNWVkNTlhNyIsInVzZXJfaWQiOjF9.UPxrry93WJ2oKOZeKc_G_cFVXaynW3pywhFSH-huKBI";
+      config.headers["Authorization"] = `Bearer ${tkn}`;
     }
     return config;
   },
