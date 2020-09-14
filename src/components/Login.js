@@ -49,7 +49,7 @@ export default function FormPropsTextFields() {
       })
       .then((r) => {
         if (r.data) {
-          localStorage.setItem("token", r.data.access);
+          window.localStorage.setItem("token", r.data.access);
           dispatch({ type: "SAVEUSER", payload: cred.usr });
           dispatch({ type: "SAVETOKEN", payload: r.data.access });
         }
