@@ -14,14 +14,22 @@ export default function Note() {
   const refresh = useSelector((store) => store.refresh);
   const active_notebook = useSelector((store) => store.active_notebook);
 
+  const token = useSelector((state) => state.token);
+
   useEffect(() => {
-    axios.get(URL + API.NOTEBOOK).then((r) => {
-      if (r.data) {
-        dispatch({ type: "SET_NOTEBOOKS", payload: r.data.reverse() });
-        dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });
-        setLoading(false);
-      }
-    });
+    axios
+      .get(URL + API.NOTEBOOK, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((r) => {
+        if (r.data) {
+          dispatch({ type: "SET_NOTEBOOKS", payload: r.data.reverse() });
+          dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });
+          setLoading(false);
+        }
+      });
   }, [refresh]);
 
   if (loading) {
