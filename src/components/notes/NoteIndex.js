@@ -32,9 +32,9 @@ export default function Note() {
       });
   }, [refresh]);
 
-  if (loading) {
-    return <>loading..</>;
-  }
+  // if (loading) {
+  //   return <>loading..</>;
+  // }
 
   return (
     <>
