@@ -48,7 +48,7 @@ const Quill = () => {
 
   const handleSave = () => {
     axios
-      .patch(URL + API.NOTES + "/" + notes[active_note].id + "/", {
+      .patch(URL + API.NOTES + notes[active_note].id, {
         content: text,
       })
       .then((e) => {
@@ -66,7 +66,7 @@ const Quill = () => {
         )
       ) {
         axios
-          .delete(URL + API.NOTES + "/" + notes[active_note].id + "/")
+          .delete(URL + API.NOTES + notes[active_note].id)
           .then((e) => {
             dispatch({ type: "SET_QUILL", payload: "" });
             dispatch({ type: "SET_REFRESH" });
@@ -78,7 +78,7 @@ const Quill = () => {
         `Are you really want to delete '${notebooks[active_notebook].title}' notebook?`
       );
       axios
-        .delete(URL + API.NOTEBOOK + "/" + notebooks[active_notebook].id + "/")
+        .delete(URL + API.NOTEBOOK + notebooks[active_notebook].id)
         .then((e) => {
           dispatch({ type: "ACTIVE_NOTEBOOK", payload: 0 });
           dispatch({ type: "SET_REFRESH" });
