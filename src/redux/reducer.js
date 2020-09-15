@@ -52,7 +52,6 @@ export default (state = loadState(), action) => {
     case "SET_ROUTE":
       return { ...state, route: action.payload };
     case "SET_REFRESH":
-      console.log(state.refresh);
       return { ...state, refresh: !state.refresh };
     case "LOGOUT":
       return initialState;

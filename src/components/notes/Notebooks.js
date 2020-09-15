@@ -28,12 +28,13 @@ const Notebooks = () => {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({
               type: "SET_QUILL",
-              payload: re.data[0].content,
+              payload: re.data.length >= 1 && re.data[0].content,
             });
           } else {
             dispatch({ type: "SET_NOTES", payload: [] });
           }
-        });
+        })
+        .catch((e) => alert(e));
     }
     setLoading(false);
   }, [refresh]);
@@ -57,7 +58,10 @@ const Notebooks = () => {
           if (re.data.length > 0) {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({ type: "ACTIVE_NOTE", payload: 0 });
-            dispatch({ type: "SET_QUILL", payload: re.data[0].content });
+            dispatch({
+              type: "SET_QUILL",
+              payload: re.data.length >= 1 && re.data[0].content,
+            });
           } else {
             dispatch({ type: "SET_NOTES", payload: [] });
             dispatch({ type: "SET_QUILL", payload: "<p><br></p>".repeat(20) });

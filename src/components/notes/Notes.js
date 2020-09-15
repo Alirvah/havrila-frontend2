@@ -50,7 +50,7 @@ const Notes = () => {
         title: title,
         content: "<p><br></p>".repeat(20),
         starred: false,
-        notebook: URL + API.NOTEBOOK + notebooks[active_notebook].id,
+        notebook: URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
       })
       .then((e) => {
         dispatch({ type: "ACTIVE_NOTE", payload: 0 });
