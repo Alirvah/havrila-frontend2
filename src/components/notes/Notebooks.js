@@ -41,7 +41,7 @@ const Notebooks = () => {
   const addNotebook = () => {
     const title = prompt("Note:");
     axios
-      .post(URL + API.NOTEBOOK + "/", { title: title })
+      .post(URL + API.NOTEBOOK, { title: title })
       .then((r) => {
         dispatch({ type: "SET_REFRESH" });
       })

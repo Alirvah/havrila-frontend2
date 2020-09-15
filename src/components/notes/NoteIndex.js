@@ -26,9 +26,9 @@ export default function Note() {
     });
   }, [refresh]);
 
-  // if (loading) {
-  //   return <>loading..</>;
-  // }
+  if (loading) {
+    return <>loading..</>;
+  }
 
   return (
     <>
@@ -36,14 +36,14 @@ export default function Note() {
         <Notebook />
         <br />
       </Grid>
-      {/* <Grid container>
+      <Grid container>
         <Grid item xs={2}>
           <Notes />
         </Grid>
         <Grid item xs={10}>
           <Quill />
         </Grid>
-      </Grid> */}
+      </Grid>
     </>
   );
 }
