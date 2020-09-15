@@ -66,7 +66,7 @@ const Quill = () => {
         )
       ) {
         axios
-          .delete(URL + API.NOTES + notes[active_note].id)
+          .delete(URL + API.NOTES + notes[active_note].id + "/")
           .then((e) => {
             dispatch({ type: "SET_QUILL", payload: "" });
             dispatch({ type: "SET_REFRESH" });

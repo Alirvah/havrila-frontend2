@@ -24,7 +24,7 @@ const Notebooks = () => {
       axios
         .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
         .then((re) => {
-          if (re.data) {
+          if (re.data.length > 0) {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({
               type: "SET_QUILL",
@@ -54,7 +54,7 @@ const Notebooks = () => {
       axios
         .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
         .then((re) => {
-          if (re.data) {
+          if (re.data.length > 0) {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({ type: "ACTIVE_NOTE", payload: 0 });
             dispatch({ type: "SET_QUILL", payload: re.data[0].content });
