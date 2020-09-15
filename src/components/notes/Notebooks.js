@@ -20,7 +20,7 @@ const Notebooks = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (notebooks) {
+    if (notebooks.length > 0) {
       axios
         .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
         .then((re) => {

@@ -140,9 +140,11 @@ function ResponsiveDrawer(props) {
           >
             Havrila.net
           </Typography>
-          <Button onClick={logout} color="inherit">
-            Logout
-          </Button>
+          <Link style={{ textDecoration: "none", color: "white" }} to="/">
+            <Button onClick={logout} color="inherit">
+              Logout
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
