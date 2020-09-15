@@ -22,9 +22,7 @@ const Notebooks = () => {
   useEffect(() => {
     if (notebooks) {
       axios
-        .get(
-          URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id + "/"
-        )
+        .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
         .then((re) => {
           if (re.data) {
             dispatch({ type: "SET_NOTES", payload: re.data });
@@ -54,7 +52,7 @@ const Notebooks = () => {
     if (notebooks.length > newValue) {
       dispatch({ type: "ACTIVE_NOTEBOOK", payload: newValue });
       axios
-        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id + "/")
+        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
         .then((re) => {
           if (re.data) {
             dispatch({ type: "SET_NOTES", payload: re.data });
