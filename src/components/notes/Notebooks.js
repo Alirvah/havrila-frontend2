@@ -20,11 +20,13 @@ const Notebooks = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (notebooks.length > 0) {
+    if (notebooks) {
       axios
-        .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
+        .get(
+          URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id + "/"
+        )
         .then((re) => {
-          if (0 < re.data.length) {
+          if (re.data) {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({
               type: "SET_QUILL",
@@ -52,9 +54,9 @@ const Notebooks = () => {
     if (notebooks.length > newValue) {
       dispatch({ type: "ACTIVE_NOTEBOOK", payload: newValue });
       axios
-        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
+        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id + "/")
         .then((re) => {
-          if (re.data.length > 0) {
+          if (re.data) {
             dispatch({ type: "SET_NOTES", payload: re.data });
             dispatch({ type: "ACTIVE_NOTE", payload: 0 });
             dispatch({ type: "SET_QUILL", payload: re.data[0].content });
@@ -62,7 +64,8 @@ const Notebooks = () => {
             dispatch({ type: "SET_NOTES", payload: [] });
             dispatch({ type: "SET_QUILL", payload: "<p><br></p>".repeat(20) });
           }
-        });
+        })
+        .catch((e) => alert(e));
     } else {
       addNotebook();
     }
