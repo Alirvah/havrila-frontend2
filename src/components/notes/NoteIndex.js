@@ -18,7 +18,7 @@ export default function Note() {
 
   useEffect(() => {
     axios
-      .get(URL + API.NOTEBOOK, {
+      .get(URL + API.NOTEBOOK + "?nocache=" + new Date().getTime(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
