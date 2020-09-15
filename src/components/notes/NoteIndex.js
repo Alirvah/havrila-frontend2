@@ -18,7 +18,7 @@ export default function Note() {
 
   useEffect(() => {
     axios
-      .get(URL + API.NOTEBOOK + "?nocache=" + new Date().getTime(), {
+      .get(URL + API.NOTEBOOK, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -42,14 +42,14 @@ export default function Note() {
         <Notebook />
         <br />
       </Grid>
-      <Grid container>
+      {/* <Grid container>
         <Grid item xs={2}>
           <Notes />
         </Grid>
         <Grid item xs={10}>
           <Quill />
         </Grid>
-      </Grid>
+      </Grid> */}
     </>
   );
 }

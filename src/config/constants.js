@@ -1,8 +1,8 @@
 export const API = {
   TOKEN: "/api/token/",
   REFRESHTOKEN: "/api/token/refresh/",
-  NOTES: "/note",
-  NOTEBOOK: "/notebook",
+  NOTES: "/note/",
+  NOTEBOOK: "/notebook/",
 };
 
 //export const HOST =
