@@ -1,3 +1,5 @@
+import "./Login.css";
+
 import { API, HOST, URL } from "../config/constants";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,6 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import Axios from "axios";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -14,12 +21,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import tokenStorage from "../helper/tokenStorage";
 
 const useStyles = makeStyles((theme) => ({
-  root2: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
   root: {
     flexGrow: 1,
   },
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FormPropsTextFields() {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [cred, setCred] = useState({ usr: "", pwd: "" });
 
   const dispatch = useDispatch();
@@ -70,49 +72,57 @@ export default function FormPropsTextFields() {
         </Toolbar>
       </AppBar>
 
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: "50vh" }}
-      >
-        <Grid item xs={3}>
-          <form className={classes.root2} noValidate autoComplete="off">
-            <div>
-              <TextField
-                value={cred.usr}
-                onChange={handleChange("usr")}
-                id="standard-search"
-                label="Username"
-                type="text"
-              />
-              <TextField
-                value={cred.pwd}
-                onChange={handleChange("pwd")}
-                id="standard-password-input"
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-              />
-            </div>
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disableElevation
-                onClick={login}
-              >
-                Log in
+      <div className="App">
+        <header className="App-header">
+          <div className="Login">
+            <TextField
+              variant="standard"
+              placeholder="Username"
+              margin="normal"
+              required
+              onChange={handleChange("usr")}
+              value={cred.usr}
+            />
+            <TextField
+              variant="standard"
+              placeholder="Password"
+              margin="normal"
+              required
+              type="password"
+              onChange={handleChange("pwd")}
+              value={cred.pwd}
+            />
+
+            <div className="Button">
+              <Button variant="contained" color="primary" onClick={login}>
+                {!loading ? (
+                  <Typography>Log In</Typography>
+                ) : (
+                  <Typography>Loading...</Typography>
+                )}
               </Button>
-              {loading && <Typography>Loading...</Typography>}
-            </Grid>
-          </form>
-        </Grid>
-      </Grid>
+            </div>
+          </div>
+          <Dialog
+            open={open}
+            onClose={() => setOpen(!open)}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Something went wrong
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpen(!open)} color="primary">
+                Okay
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </header>
+      </div>
     </div>
   );
 }
