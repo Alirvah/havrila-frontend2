@@ -1,4 +1,4 @@
-import "./Login.css";
+import "./maincss.css";
 
 import { API, HOST, URL } from "../config/constants";
 import React, { useState } from "react";
@@ -75,33 +75,40 @@ export default function FormPropsTextFields() {
       <div className="App">
         <header className="App-header">
           <div className="Login">
-            <TextField
-              variant="standard"
-              placeholder="Username"
-              margin="normal"
-              required
-              onChange={handleChange("usr")}
-              value={cred.usr}
-            />
-            <TextField
-              variant="standard"
-              placeholder="Password"
-              margin="normal"
-              required
-              type="password"
-              onChange={handleChange("pwd")}
-              value={cred.pwd}
-            />
+            <form>
+              <TextField
+                variant="standard"
+                placeholder="Username"
+                margin="normal"
+                required
+                onChange={handleChange("usr")}
+                value={cred.usr}
+              />
+              <TextField
+                variant="standard"
+                placeholder="Password"
+                margin="normal"
+                required
+                type="password"
+                onChange={handleChange("pwd")}
+                value={cred.pwd}
+              />
 
-            <div className="Button">
-              <Button variant="contained" color="primary" onClick={login}>
-                {!loading ? (
-                  <Typography>Log In</Typography>
-                ) : (
-                  <Typography>Loading...</Typography>
-                )}
-              </Button>
-            </div>
+              <div className="Button">
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  onClick={login}
+                >
+                  {!loading ? (
+                    <Typography>Log In</Typography>
+                  ) : (
+                    <Typography>Loading...</Typography>
+                  )}
+                </Button>
+              </div>
+            </form>
           </div>
           <Dialog
             open={open}

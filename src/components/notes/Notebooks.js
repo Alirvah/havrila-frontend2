@@ -41,12 +41,14 @@ const Notebooks = () => {
 
   const addNotebook = () => {
     const title = prompt("Note:");
-    axios
-      .post(URL + API.NOTEBOOK, { title: title })
-      .then((r) => {
-        dispatch({ type: "SET_REFRESH" });
-      })
-      .catch((e) => alert(e));
+    if (title) {
+      axios
+        .post(URL + API.NOTEBOOK, { title: title })
+        .then((r) => {
+          dispatch({ type: "SET_REFRESH" });
+        })
+        .catch((e) => alert(e));
+    }
   };
 
   const handleChange = (event, newValue) => {

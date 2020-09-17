@@ -2,6 +2,7 @@ import { API, HOST, URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Notebook from "./Notebooks";
 import Notes from "./Notes";
@@ -32,15 +33,15 @@ export default function Note() {
 
   return (
     <>
-      <Grid item xs={12}>
-        <Notebook />
-        <br />
-      </Grid>
       <Grid container>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
+          <Notebook />
+          <br />
+        </Grid>
+        <Grid item xs={3}>
           <Notes />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           <Quill />
         </Grid>
       </Grid>

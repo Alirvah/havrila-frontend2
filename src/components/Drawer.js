@@ -1,3 +1,5 @@
+import "./maincss.css";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -79,7 +81,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes"].map((text, index) => (
+        {["Notes", "To-do"].map((text, index) => (
           <ListItem
             component={Link}
             to={`/${text.toLowerCase()}`}
@@ -138,7 +140,7 @@ function ResponsiveDrawer(props) {
             noWrap
             className={classes.title}
           >
-            Havrila.net
+            Dashboard
           </Typography>
           <Link style={{ textDecoration: "none", color: "white" }} to="/">
             <Button onClick={logout} color="inherit">

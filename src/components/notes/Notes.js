@@ -45,17 +45,19 @@ const Notes = () => {
 
   const newNote = () => {
     const title = prompt("Note:");
-    axios
-      .post(URL + API.NOTES, {
-        title: title,
-        content: "<p><br></p>".repeat(20),
-        starred: false,
-        notebook: URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
-      })
-      .then((e) => {
-        dispatch({ type: "ACTIVE_NOTE", payload: 0 });
-        dispatch({ type: "SET_REFRESH" });
-      });
+    if (title) {
+      axios
+        .post(URL + API.NOTES, {
+          title: title,
+          content: "<p><br></p>".repeat(20),
+          starred: false,
+          notebook: URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
+        })
+        .then((e) => {
+          dispatch({ type: "ACTIVE_NOTE", payload: 0 });
+          dispatch({ type: "SET_REFRESH" });
+        });
+    }
   };
 
   const handleChange = (event, newValue) => {
