@@ -89,11 +89,15 @@ const Notes = () => {
               key={e.id}
               className={classes.button}
               label={e.title}
-              {...a11yProps(e.id)}
+              //{...a11yProps(e.id)}
             />
           ))}
         {notebooks.length > 0 && (
-          <Tab className={classes.button} label="+" {...a11yProps(999)} />
+          <Tab
+            className={classes.button}
+            label="+"
+            // {...a11yProps(999)}
+          />
         )}
       </Tabs>
     </div>
