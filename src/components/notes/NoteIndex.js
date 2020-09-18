@@ -1,4 +1,4 @@
-import { API, HOST, URL } from "../../config/constants";
+import { API, HOST, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,7 +18,7 @@ export default function Note() {
   const token = useSelector((state) => state.token);
 
   useEffect(() => {
-    axios.get(URL + API.NOTEBOOK).then((r) => {
+    axios.get(NOTE_URL + API.NOTEBOOK).then((r) => {
       if (r.data) {
         dispatch({ type: "SET_NOTEBOOKS", payload: r.data.reverse() });
         dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });

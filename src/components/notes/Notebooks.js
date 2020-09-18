@@ -1,4 +1,4 @@
-import { API, HOST, URL } from "../../config/constants";
+import { API, HOST, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -22,7 +22,9 @@ const Notebooks = () => {
   useEffect(() => {
     if (notebooks.length > 0) {
       axios
-        .get(URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id)
+        .get(
+          NOTE_URL + API.NOTES + "?notebook=" + notebooks[active_notebook].id
+        )
         .then((re) => {
           if (re.data.length > 0) {
             dispatch({ type: "SET_NOTES", payload: re.data });
@@ -43,7 +45,7 @@ const Notebooks = () => {
     const title = prompt("Note:");
     if (title) {
       axios
-        .post(URL + API.NOTEBOOK, { title: title })
+        .post(NOTE_URL + API.NOTEBOOK, { title: title })
         .then((r) => {
           dispatch({ type: "SET_REFRESH" });
         })
@@ -55,7 +57,7 @@ const Notebooks = () => {
     if (notebooks.length > newValue) {
       dispatch({ type: "ACTIVE_NOTEBOOK", payload: newValue });
       axios
-        .get(URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
+        .get(NOTE_URL + API.NOTES + "?notebook=" + notebooks[newValue].id)
         .then((re) => {
           if (re.data.length > 0) {
             dispatch({ type: "SET_NOTES", payload: re.data });

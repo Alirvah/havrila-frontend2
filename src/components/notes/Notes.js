@@ -1,4 +1,4 @@
-import { API, HOST, URL } from "../../config/constants";
+import { API, HOST, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -47,11 +47,12 @@ const Notes = () => {
     const title = prompt("Note:");
     if (title) {
       axios
-        .post(URL + API.NOTES, {
+        .post(NOTE_URL + API.NOTES, {
           title: title,
           content: "<p><br></p>".repeat(20),
           starred: false,
-          notebook: URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
+          notebook:
+            NOTE_URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
         })
         .then((e) => {
           dispatch({ type: "ACTIVE_NOTE", payload: 0 });

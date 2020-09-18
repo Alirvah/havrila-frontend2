@@ -1,6 +1,6 @@
 import "./maincss.css";
 
-import { API, HOST, URL } from "../config/constants";
+import { API, HOST, NOTE_URL } from "../config/constants";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -84,6 +84,7 @@ export default function FormPropsTextFields() {
                 onChange={handleChange("usr")}
                 value={cred.usr}
               />
+              <br />
               <TextField
                 variant="standard"
                 placeholder="Password"
