@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Paper from "@material-ui/core/Paper";
 import Tab from "@material-ui/core/Tab";
@@ -17,8 +16,6 @@ import axios from "axios";
 const Notebooks = () => {
   const notebooks = useSelector((store) => store.notebooks);
   const active_notebook = useSelector((store) => store.active_notebook);
-  const notes = useSelector((store) => store.notes);
-  const active_note = useSelector((store) => store.active_note);
   const refresh = useSelector((store) => store.refresh);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
