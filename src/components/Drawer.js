@@ -1,5 +1,7 @@
 import "./maincss.css";
 
+import { API, HOST, TODO_URL } from "../config/constants";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,10 +22,10 @@ import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Notebook from "./notes/Notebooks";
 import PropTypes from "prop-types";
-import React from "react";
 import Router from "./Router";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import axios from "axios";
 import tokenStorage from "../helper/tokenStorage";
 
 const drawerWidth = 240;
@@ -69,8 +71,16 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const dispatch = useDispatch();
+  const todos = useSelector((store) => store.numberOfTodos);
+
+  useEffect(() => {
+    axios.get(TODO_URL + API.TODO).then((r) => {
+      if (r.data) {
+        dispatch({ type: "SET_NUMBER_OF_TODOS", payload: r.data.length });
+      }
+    });
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -81,7 +91,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes", "To-do"].map((text, index) => (
+        {["Notes", "Todo"].map((text, index) => (
           <ListItem
             component={Link}
             to={`/${text.toLowerCase()}`}
@@ -92,6 +102,7 @@ function ResponsiveDrawer(props) {
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
+            {text === "Todo" && <p>{todos}</p>}
           </ListItem>
         ))}
       </List>

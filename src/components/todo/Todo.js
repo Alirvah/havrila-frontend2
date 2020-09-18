@@ -1,5 +1,6 @@
 import { API, HOST, TODO_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -27,12 +28,14 @@ export default function Todo() {
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const dispatch = useDispatch();
 
   const classes = useStyles();
 
   useEffect(() => {
     axios.get(TODO_URL + API.TODO).then((r) => {
       if (r.data) {
+        dispatch({ type: "SET_NUMBER_OF_TODOS", payload: r.data.length });
         setTodos(r.data);
         setLoading(false);
       }

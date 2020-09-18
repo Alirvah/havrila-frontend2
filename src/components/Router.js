@@ -11,7 +11,7 @@ export default function Notebooks() {
         <Route path="/notes">
           <NoteIndex />
         </Route>
-        <Route path="/to-do">
+        <Route path="/todo">
           <Todo />
         </Route>
       </Switch>

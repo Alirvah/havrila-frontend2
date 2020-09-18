@@ -8,6 +8,7 @@ const initialState = {
   quill: "",
   route: "/",
   refresh: true,
+  numberOfTodos: 0,
 };
 
 const loadState = () => {
@@ -55,6 +56,8 @@ export default (state = loadState(), action) => {
       return { ...state, refresh: !state.refresh };
     case "LOGOUT":
       return initialState;
+    case "SET_NUMBER_OF_TODOS":
+      return { ...state, numberOfTodos: action.payload };
     default:
       return state;
   }
