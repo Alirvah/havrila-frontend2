@@ -6,6 +6,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
 import AppBar from "@material-ui/core/AppBar";
+import Badge from "@material-ui/core/Badge";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
@@ -99,10 +100,14 @@ function ResponsiveDrawer(props) {
             key={text}
           >
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {index === 0 && <InboxIcon />}
+              {index === 1 && (
+                <Badge color="secondary" badgeContent={todos}>
+                  <MailIcon />
+                </Badge>
+              )}
             </ListItemIcon>
             <ListItemText primary={text} />
-            {text === "Todo" && <p>{todos}</p>}
           </ListItem>
         ))}
       </List>
