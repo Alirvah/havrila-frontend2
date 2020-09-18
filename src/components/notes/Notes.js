@@ -3,9 +3,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
+import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { getApi } from "../../api/api";
@@ -40,15 +47,18 @@ const Notes = () => {
   const notebooks = useSelector((store) => store.notebooks);
   const active_notebook = useSelector((store) => store.active_notebook);
 
+  const [open, setOpen] = useState(false);
+  const [newNote, setNewNote] = useState("");
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const newNote = () => {
-    const title = prompt("Note:");
-    if (title) {
+  const addNewNote = () => {
+    //const title = prompt("Note:");
+    if (newNote) {
       axios
         .post(NOTE_URL + API.NOTES, {
-          title: title,
+          title: newNote,
           content: "<p><br></p>".repeat(20),
           starred: false,
           notebook:
@@ -57,6 +67,7 @@ const Notes = () => {
         .then((e) => {
           dispatch({ type: "ACTIVE_NOTE", payload: 0 });
           dispatch({ type: "SET_REFRESH" });
+          handleClose();
         });
     }
   };
@@ -66,8 +77,13 @@ const Notes = () => {
       dispatch({ type: "ACTIVE_NOTE", payload: newValue });
       dispatch({ type: "SET_QUILL", payload: notes[newValue].content });
     } else {
-      newNote();
+      setOpen(true);
     }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setNewNote("");
   };
 
   if (!notes) return <div>Loading...</div>;
@@ -100,6 +116,33 @@ const Notes = () => {
           />
         )}
       </Tabs>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Note</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Note name"
+            type="text"
+            fullWidth
+            onChange={(e) => setNewNote(e.target.value)}
+            value={newNote}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={addNewNote} color="primary">
+            Create
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
