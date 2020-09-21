@@ -38,7 +38,7 @@ export default function Note() {
           <Notebook />
           <br />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={3} style={{ paddingRight: "10px" }} item>
           <Notes />
         </Grid>
         <Grid item xs={9}>
