@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../redux/reducer";
+import jwt_decode from "jwt-decode";
 import tokenStorage from "../helper/tokenStorage";
 
 // Add a request interceptor
@@ -29,9 +29,33 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    alert(error);
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    const originalRequest = error.config;
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refresh = localStorage.getItem("tokenRefresh");
+
+      var decodedRefresh = jwt_decode(refresh);
+      var dateNow = new Date().getTime();
+
+      if (dateNow > decodedRefresh.exp * 1000) return Promise.reject(error);
+
+      return axios
+        .post(
+          "https://3ru4fvt9t5.execute-api.eu-central-1.amazonaws.com/dev/api/token/refresh/",
+          { refresh }
+        )
+        .then(({ data }) => {
+          localStorage.setItem("token", data.access);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${data.access}`;
+          originalRequest.headers["Authorization"] = `Bearer ${data.access}`;
+          return axios(originalRequest);
+        });
+    }
     return Promise.reject(error);
   }
 );
