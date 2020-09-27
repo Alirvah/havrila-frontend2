@@ -15,3 +15,7 @@ code {
 a {
   text-decoration: none;
 }
+
+.mat-row:hover {
+  background-color: #cbcbcb;
+}

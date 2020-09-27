@@ -1,10 +1,26 @@
 import { API, FILE_URL } from "../../config/constants";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Divider, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
 
 export default function Filer() {
+  const classes = useStyles();
+
   const [files, setFiles] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
@@ -81,40 +97,52 @@ export default function Filer() {
         +
       </Button>
       <p>{`< ${MAX_SIZE} MB`}</p>
-      <Grid container spacing={1}>
-        {files &&
-          files.map((file) => (
-            <>
-              <Grid item xs={4}>
-                <a
-                  href={file.upload}
-                  style={{
-                    color: "inherit",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  {file.title.indexOf("/") > -1
-                    ? file.title.split("/")[1]
-                    : file.title}
-                </a>
-              </Grid>
-              <Grid item xs={1}>
-                {humanFileSize(file.size)}
-              </Grid>
-              <Grid item xs={7}>
-                <Button
-                  onClick={handleDelete(file.id)}
-                  size="small"
-                  //variant="outlined"
-                  color="primary"
-                >
-                  x
-                </Button>
-              </Grid>
-            </>
-          ))}
-      </Grid>
+
+      <TableContainer component={Paper}>
+        <Table
+          className={classes.table}
+          size="small"
+          aria-label="a dense table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Size</TableCell>
+              <TableCell>Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {files &&
+              files.map((file) => (
+                <TableRow className="mat-row">
+                  <TableCell>
+                    <a
+                      href={file.upload}
+                      style={{
+                        color: "inherit",
+                      }}
+                    >
+                      {file.title.indexOf("/") > -1
+                        ? file.title.split("/")[1]
+                        : file.title}
+                    </a>
+                  </TableCell>
+                  <TableCell>{humanFileSize(file.size)}</TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={handleDelete(file.id)}
+                      size="small"
+                      //variant="outlined"
+                      color="primary"
+                    >
+                      x
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
