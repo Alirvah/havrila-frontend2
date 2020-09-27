@@ -4,6 +4,8 @@ export const API = {
   NOTES: "/note/",
   NOTEBOOK: "/notebook/",
   TODO: "/todos/",
+  FILER: "/filer/",
+  ADMIN: "/admin/",
 };
 
 export const HOST =
@@ -11,3 +13,5 @@ export const HOST =
 
 export const NOTE_URL = HOST + "/note/api/v1";
 export const TODO_URL = HOST + "/todo/api/v1";
+export const FILE_URL = HOST + "/file/api/v1";
+export const WIFI_URL = HOST + "/wifi/api/v1";

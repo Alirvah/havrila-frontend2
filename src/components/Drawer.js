@@ -11,6 +11,8 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
@@ -22,8 +24,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Notebook from "./notes/Notebooks";
+import NotesIcon from "@material-ui/icons/Notes";
 import PropTypes from "prop-types";
 import Router from "./Router";
+import TapAndPlayIcon from "@material-ui/icons/TapAndPlay";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
@@ -74,6 +78,7 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
   const todos = useSelector((store) => store.numberOfTodos);
+  const user = useSelector((store) => store.user);
 
   useEffect(() => {
     axios.get(TODO_URL + API.TODO).then((r) => {
@@ -92,7 +97,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes", "Todo"].map((text, index) => (
+        {["Notes", "Todo", "Filer", "Wifi"].map((text, index) => (
           <ListItem
             component={Link}
             to={`/${text.toLowerCase()}`}
@@ -100,12 +105,14 @@ function ResponsiveDrawer(props) {
             key={text}
           >
             <ListItemIcon>
-              {index === 0 && <InboxIcon />}
+              {index === 0 && <NotesIcon />}
               {index === 1 && (
                 <Badge color="secondary" badgeContent={todos}>
                   <MailIcon />
                 </Badge>
               )}
+              {index === 2 && <FolderOpenIcon />}
+              {index === 3 && <TapAndPlayIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -158,9 +165,10 @@ function ResponsiveDrawer(props) {
           >
             Dashboard
           </Typography>
+          <Typography>{user}</Typography>
           <Link style={{ textDecoration: "none", color: "white" }} to="/">
             <Button onClick={logout} color="inherit">
-              Logout
+              <ExitToAppIcon />
             </Button>
           </Link>
         </Toolbar>
