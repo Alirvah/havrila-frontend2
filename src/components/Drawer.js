@@ -97,7 +97,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes", "Todo", "Filer", "Wifi"].map((text, index) => (
+        {["Notes", "Todo", "Filer", "Devices"].map((text, index) => (
           <ListItem
             component={Link}
             to={`/${text.toLowerCase()}`}

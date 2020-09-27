@@ -19,8 +19,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    //axios.get();
-    //setTime('18.06.1990')
     setTimeout(() => setCounter(counter + ONE_SECOND), 100);
   }, [counter]);
 

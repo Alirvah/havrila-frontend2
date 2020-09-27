@@ -1,7 +1,7 @@
 import { API, FILE_URL } from "../../config/constants";
+import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
-import { Button } from "@material-ui/core";
 import axios from "axios";
 
 export default function Filer() {
@@ -81,28 +81,40 @@ export default function Filer() {
         +
       </Button>
       <p>{`< ${MAX_SIZE} MB`}</p>
-      {files &&
-        files.map((file) => (
-          <p key={file.id}>
-            <a
-              href={file.upload}
-              style={{ color: "inherit", fontWeight: "bold", fontSize: "15px" }}
-            >
-              {file.title.indexOf("/") > -1
-                ? file.title.split("/")[1]
-                : file.title}
-            </a>{" "}
-            {humanFileSize(file.size)}{" "}
-            <Button
-              onClick={handleDelete(file.id)}
-              size="small"
-              variant="outlined"
-              color="primary"
-            >
-              x
-            </Button>
-          </p>
-        ))}
+      <Grid container spacing={1}>
+        {files &&
+          files.map((file) => (
+            <>
+              <Grid item xs={4}>
+                <a
+                  href={file.upload}
+                  style={{
+                    color: "inherit",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                  }}
+                >
+                  {file.title.indexOf("/") > -1
+                    ? file.title.split("/")[1]
+                    : file.title}
+                </a>
+              </Grid>
+              <Grid item xs={1}>
+                {humanFileSize(file.size)}
+              </Grid>
+              <Grid item xs={7}>
+                <Button
+                  onClick={handleDelete(file.id)}
+                  size="small"
+                  //variant="outlined"
+                  color="primary"
+                >
+                  x
+                </Button>
+              </Grid>
+            </>
+          ))}
+      </Grid>
     </>
   );
 }
