@@ -93,7 +93,7 @@ export default function Filer() {
         {files &&
           files.map((file) => (
             <>
-              <ListItem>
+              <ListItem key={file.id}>
                 <ListItemIcon>
                   <IconButton
                     onClick={handleDelete(file.id)}
