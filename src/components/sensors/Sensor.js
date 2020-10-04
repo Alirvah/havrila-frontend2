@@ -182,25 +182,25 @@ const Sensor = () => {
       <Grid container>
         {dataStatus && (
           <>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataStatus.cpuRamDisk}
                 options={datasetOpts("CPU,RAM,Disk", "%")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataStatus.cpuTemp}
                 options={datasetOpts("CPU Temperature", "*C")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataStatus.uptime}
                 options={datasetOpts("Uptime", "days")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataStatus.wifiThroughput}
                 options={datasetOpts("Wifi Throughput", "GB")}
@@ -211,25 +211,25 @@ const Sensor = () => {
 
         {dataSensor && (
           <>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataSensor.light}
                 options={datasetOpts("Light", "Lux")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataSensor.temperature}
                 options={datasetOpts("Temperature", "*C")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataSensor.pressure}
                 options={datasetOpts("Pressure", "hPa")}
               ></Line>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item lg={6}>
               <Line
                 data={dataSensor.humidity}
                 options={datasetOpts("Humidity", "%")}
