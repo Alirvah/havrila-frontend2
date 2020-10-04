@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { Line } from "react-chartjs-2";
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import StopIcon from "@material-ui/icons/Stop";
 import axios from "axios";
 
 const datasetOpts = (label, unit) => ({
@@ -55,11 +57,18 @@ const Sensor = () => {
     pressure: {},
     humidity: {},
   });
-  const [state, setState] = useState({});
+  const [stateRpi, setStateRpi] = useState(false);
+  const [lastOnline, setLastOnline] = useState("");
 
   useEffect(() => {
     axios.get(SENS_URL + API.STATUS).then((r) => {
       if (r.data) {
+        const now = new Date();
+        const lastTs = new Date(r.data[0].ts * 1e3);
+        const delta = now.getTime() - lastTs.getTime();
+        delta < 120e3 && setStateRpi(true);
+        setLastOnline(new Date(r.data[0].ts * 1e3));
+
         const ts = r.data.map((e) => new Date(e.ts * 1e3));
         setDataStatus({
           ...dataStatus,
@@ -178,7 +187,17 @@ const Sensor = () => {
 
   return (
     <>
-      <p>Sensor</p>
+      <p>
+        <b>RaspberryPi</b>{" "}
+        {stateRpi ? (
+          <PlayCircleFilledIcon fontSize="small" style={{ color: "green" }} />
+        ) : (
+          <StopIcon fontSize="small" color="error" />
+        )}
+      </p>
+      <p>
+        <b>Last Online:</b> {lastOnline && lastOnline.toLocaleString()}
+      </p>
       <Grid container>
         {dataStatus && (
           <>

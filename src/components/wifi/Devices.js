@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Wifi() {
-  return <>Wifi</>;
+  return <>Devices</>;
 }

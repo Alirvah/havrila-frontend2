@@ -90,7 +90,7 @@ export default function Filer() {
       <p>{`< ${MAX_SIZE} MB`}</p>
 
       <List>
-        {files &&
+        {files.length > 0 &&
           files.map((file) => (
             <>
               <ListItem key={file.id}>
