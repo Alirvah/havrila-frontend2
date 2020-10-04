@@ -6,6 +6,9 @@ export const API = {
   TODO: "/todos/",
   FILER: "/filer/",
   ADMIN: "/admin/",
+  DEVICE: "/device/",
+  SENSOR: "/sensor/",
+  STATUS: "/status/",
 };
 
 export const HOST =
@@ -15,3 +18,4 @@ export const NOTE_URL = HOST + "/note/api/v1";
 export const TODO_URL = HOST + "/todo/api/v1";
 export const FILE_URL = HOST + "/file/api/v1";
 export const WIFI_URL = HOST + "/wifi/api/v1";
+export const SENS_URL = HOST + "/sensors/api/v1";

@@ -1,0 +1,245 @@
+import { API, HOST, SENS_URL } from "../../config/constants";
+import React, { useEffect, useState } from "react";
+
+import { Grid } from "@material-ui/core";
+import { Line } from "react-chartjs-2";
+import axios from "axios";
+
+const datasetOpts = (label, unit) => ({
+  animation: false,
+  title: {
+    display: true,
+    text: label,
+  },
+  scales: {
+    xAxes: [
+      {
+        type: "time",
+        time: {
+          unit: "day",
+        },
+      },
+    ],
+    yAxes: [
+      {
+        scaleLabel: {
+          display: true,
+          labelString: unit,
+        },
+      },
+    ],
+  },
+});
+
+const datasetDetails = (data, label, color) => ({
+  data: data,
+  label: label,
+  borderColor: color,
+  pointBackgroundColor: color,
+  fill: false,
+  showLine: false,
+  pointStyle: "circle",
+  radius: 1,
+});
+
+const Sensor = () => {
+  const [dataStatus, setDataStatus] = useState({
+    cpuRamDisk: {},
+    cpuTemp: {},
+    uptime: {},
+    wifiThroughput: {},
+  });
+  const [dataSensor, setDataSensor] = useState({
+    light: {},
+    temperature: {},
+    pressure: {},
+    humidity: {},
+  });
+  const [state, setState] = useState({});
+
+  useEffect(() => {
+    axios.get(SENS_URL + API.STATUS).then((r) => {
+      if (r.data) {
+        const ts = r.data.map((e) => new Date(e.ts * 1e3));
+        setDataStatus({
+          ...dataStatus,
+          cpuRamDisk: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.cpu),
+                "CPU",
+                "blue"
+              ),
+              datasetDetails(
+                r.data.map((e) => e.mem),
+                "RAM",
+                "green"
+              ),
+              datasetDetails(
+                r.data.map((e) => e.disk),
+                "Disk",
+                "red"
+              ),
+            ],
+          },
+          cpuTemp: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.temp),
+                "CPU Temperature",
+                "blue"
+              ),
+            ],
+          },
+          uptime: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.uptime / 60 / 60 / 24),
+                "Uptime",
+                "blue"
+              ),
+            ],
+          },
+          wifiThroughput: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.wtran / 1e9),
+                "Wi-Fi Tranceive",
+                "green"
+              ),
+              datasetDetails(
+                r.data.map((e) => e.wrec / 1e9),
+                "Wi-Fi Receive",
+                "blue"
+              ),
+            ],
+          },
+        });
+      }
+    });
+    axios.get(SENS_URL + API.SENSOR).then((r) => {
+      if (r.data) {
+        const ts = r.data.map((e) => new Date(e.ts * 1e3));
+        setDataSensor({
+          ...dataSensor,
+          light: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.light),
+                "Light",
+                "blue"
+              ),
+            ],
+          },
+          temperature: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.temprpi),
+                "Temp Rpi",
+                "blue"
+              ),
+              datasetDetails(
+                r.data.map((e) => e.temproom),
+                "Temp Room",
+                "green"
+              ),
+            ],
+          },
+          pressure: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.pressure),
+                "Pressure",
+                "blue"
+              ),
+            ],
+          },
+          humidity: {
+            labels: ts,
+            datasets: [
+              datasetDetails(
+                r.data.map((e) => e.humidity),
+                "Humidity",
+                "blue"
+              ),
+            ],
+          },
+        });
+      }
+    });
+  }, []);
+
+  return (
+    <>
+      <p>Sensor</p>
+      <Grid container>
+        {dataStatus && (
+          <>
+            <Grid item xs={6}>
+              <Line
+                data={dataStatus.cpuRamDisk}
+                options={datasetOpts("CPU,RAM,Disk", "%")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataStatus.cpuTemp}
+                options={datasetOpts("CPU Temperature", "*C")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataStatus.uptime}
+                options={datasetOpts("Uptime", "days")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataStatus.wifiThroughput}
+                options={datasetOpts("Wifi Throughput", "GB")}
+              ></Line>
+            </Grid>
+          </>
+        )}
+
+        {dataSensor && (
+          <>
+            <Grid item xs={6}>
+              <Line
+                data={dataSensor.light}
+                options={datasetOpts("Light", "Lux")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataSensor.temperature}
+                options={datasetOpts("Temperature", "*C")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataSensor.pressure}
+                options={datasetOpts("Pressure", "hPa")}
+              ></Line>
+            </Grid>
+            <Grid item xs={6}>
+              <Line
+                data={dataSensor.humidity}
+                options={datasetOpts("Humidity", "%")}
+              ></Line>
+            </Grid>
+          </>
+        )}
+      </Grid>
+    </>
+  );
+};
+
+export default Sensor;

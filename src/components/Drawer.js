@@ -28,6 +28,7 @@ import NotesIcon from "@material-ui/icons/Notes";
 import PropTypes from "prop-types";
 import Router from "./Router";
 import TapAndPlayIcon from "@material-ui/icons/TapAndPlay";
+import TimelineIcon from "@material-ui/icons/Timeline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
@@ -97,7 +98,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes", "Todo", "Filer", "Devices"].map((text, index) => (
+        {["Notes", "Todo", "Filer", "Devices", "Sensors"].map((text, index) => (
           <ListItem
             component={Link}
             to={`/${text.toLowerCase()}`}
@@ -113,6 +114,7 @@ function ResponsiveDrawer(props) {
               )}
               {index === 2 && <FolderOpenIcon />}
               {index === 3 && <TapAndPlayIcon />}
+              {index === 4 && <TimelineIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
