@@ -76,8 +76,8 @@ function ResponsiveDrawer(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
   const todos = useSelector((store) => store.numberOfTodos);
-  const user = useSelector((store) => store.user);
-  const groups = useSelector((store) => store.groups);
+  const user = useSelector((store) => store.user) || "";
+  const groups = useSelector((store) => store.groups) || "";
 
   useEffect(() => {
     axios.get(TODO_URL + API.TODO).then((r) => {
