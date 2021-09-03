@@ -1,8 +1,6 @@
-import { API, HOST, TODO_URL } from "../../config/constants";
+import { API, TODO_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,6 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +39,7 @@ export default function Todo() {
         setLoading(false);
       }
     });
+    // eslint-disable-next-line
   }, [refresh]);
 
   const handleToggle = (id, done) => () => {
@@ -59,7 +59,7 @@ export default function Todo() {
   };
 
   const enterSubmit = (e) => {
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       saveTodo();
     }
   };

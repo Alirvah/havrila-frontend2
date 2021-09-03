@@ -1,23 +1,11 @@
-import { API, HOST, NOTE_URL } from "../../config/constants";
-import React, { useEffect, useState } from "react";
+import { API, NOTE_URL } from "../../config/constants";
 import { useDispatch, useSelector } from "react-redux";
 
-import Box from "@material-ui/core/Box";
-import PropTypes from "prop-types";
+import React from "react";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import { getApi } from "../../api/api";
 import { makeStyles } from "@material-ui/core/styles";
-import { postApi } from "../../api/api";
-
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {

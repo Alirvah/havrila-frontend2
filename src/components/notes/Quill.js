@@ -1,8 +1,7 @@
 import "react-quill/dist/quill.snow.css";
 
-import { API, HOST, NOTE_URL } from "../../config/constants";
-import React, { useEffect, useState } from "react";
-import { getApi, patchApi, postApi } from "../../api/api";
+import { API, NOTE_URL } from "../../config/constants";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@material-ui/core/Button";
@@ -91,7 +90,7 @@ const Quill = () => {
 
   if (notebooks.length === 0) return <div></div>;
 
-  if (notes.length <= 0 && notebooks.length != 0)
+  if (notes.length <= 0 && notebooks.length !== 0)
     return (
       <Button
         type="text"

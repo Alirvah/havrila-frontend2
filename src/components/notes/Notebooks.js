@@ -1,4 +1,4 @@
-import { API, HOST, NOTE_URL } from "../../config/constants";
+import { API, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,8 +10,6 @@ import axios from "axios";
 const Notebooks = () => {
   const notebooks = useSelector((store) => store.notebooks);
   const active_notebook = useSelector((store) => store.active_notebook);
-  const notes = useSelector((store) => store.notes);
-  const active_note = useSelector((store) => store.active_note);
 
   const refresh = useSelector((store) => store.refresh);
 
@@ -39,6 +37,7 @@ const Notebooks = () => {
         .catch((e) => alert(e));
     }
     setLoading(false);
+    // eslint-disable-next-line
   }, [refresh]);
 
   const addNotebook = () => {

@@ -1,24 +1,22 @@
 import "./maincss.css";
+import "../api/api";
 
-import { API, HOST, NOTE_URL } from "../config/constants";
+import { API, HOST } from "../config/constants";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import AppBar from "@material-ui/core/AppBar";
-import Axios from "axios";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import tokenStorage from "../helper/tokenStorage";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +102,7 @@ export default function FormPropsTextFields() {
                   onClick={login}
                 >
                   {!loading ? (
-                    <Typography>Log In - test</Typography>
+                    <Typography>Log In</Typography>
                   ) : (
                     <Typography>Loading...</Typography>
                   )}

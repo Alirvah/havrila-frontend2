@@ -1,4 +1,4 @@
-import { API, HOST, SENS_URL } from "../../config/constants";
+import { API, SENS_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
 import { Grid } from "@material-ui/core";
@@ -183,6 +183,7 @@ const Sensor = () => {
         });
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   return (

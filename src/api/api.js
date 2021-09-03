@@ -1,6 +1,6 @@
+import { HOST } from "../config/constants";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import tokenStorage from "../helper/tokenStorage";
 
 // Add a request interceptor
 axios.interceptors.request.use(
@@ -47,10 +47,7 @@ axios.interceptors.response.use(
       if (dateNow > decodedRefresh.exp * 1000) return Promise.reject(error);
 
       return axios
-        .post(
-          "https://3ru4fvt9t5.execute-api.eu-central-1.amazonaws.com/dev/api/token/refresh/",
-          { refresh }
-        )
+        .post(`${HOST}/api/token/refresh/`, { refresh })
         .then(({ data }) => {
           localStorage.setItem("token", data.access);
           axios.defaults.headers.common[

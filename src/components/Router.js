@@ -1,7 +1,11 @@
+import { API, HOST } from "../config/constants";
+// Router has to be imported otherwise routing breaks
+// eslint-disable-next-line
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import Filer from "./filer/Filer";
 import Home from "./home/home";
+import Minecraft from "./minecraft/Minecraft";
 import NoteIndex from "./notes/NoteIndex";
 import React from "react";
 import Sensor from "./sensors/Sensor";
@@ -26,6 +30,12 @@ export default function Notebooks() {
         </Route>
         <Route path="/devices">
           <Wifi />
+        </Route>
+        <Route path="/minecraft">
+          <Minecraft />
+        </Route>
+        <Route path="/admin">
+          {() => window.open(HOST + API.ADMIN, "_blank")}
         </Route>
         <Route path="/">
           <Home />

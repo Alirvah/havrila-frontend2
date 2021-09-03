@@ -1,8 +1,7 @@
-import { API, HOST, NOTE_URL } from "../../config/constants";
+import { API, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Notebook from "./Notebooks";
 import Notes from "./Notes";
@@ -15,8 +14,6 @@ export default function Note() {
   const refresh = useSelector((store) => store.refresh);
   const active_notebook = useSelector((store) => store.active_notebook);
 
-  const token = useSelector((state) => state.token);
-
   useEffect(() => {
     axios.get(NOTE_URL + API.NOTEBOOK).then((r) => {
       if (r.data) {
@@ -25,6 +22,7 @@ export default function Note() {
         setLoading(false);
       }
     });
+    // eslint-disable-next-line
   }, [refresh]);
 
   if (loading) {
@@ -38,7 +36,7 @@ export default function Note() {
           <Notebook />
           <br />
         </Grid>
-        <Grid item xs={3} style={{ paddingRight: "10px" }} item>
+        <Grid item xs={3} style={{ paddingRight: "10px" }}>
           <Notes />
         </Grid>
         <Grid item xs={9}>

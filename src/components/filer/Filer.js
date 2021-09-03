@@ -1,7 +1,7 @@
 import { API, FILE_URL } from "../../config/constants";
-import { Button, Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
+import { Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";

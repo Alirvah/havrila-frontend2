@@ -1,7 +1,6 @@
-import { API, HOST } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
+import { useSelector } from "react-redux";
 
 const SECONDS_IN_YEAR = 31556952;
 const ONE_SECOND = 1 / SECONDS_IN_YEAR;
@@ -18,6 +17,8 @@ export default function Home() {
     return sec / SECONDS_IN_YEAR;
   });
 
+  const user = useSelector((store) => store.user);
+
   useEffect(() => {
     setTimeout(() => setCounter(counter + ONE_SECOND), 100);
   }, [counter]);
@@ -25,8 +26,7 @@ export default function Home() {
   return (
     <>
       <p>Home</p>
-      <a href={HOST + API.ADMIN}>Django Admin</a>
-      <h1>{counter.toFixed(8)}</h1>
+      {user === "patrik" && <h1>{counter.toFixed(8)}</h1>}
     </>
   );
 }

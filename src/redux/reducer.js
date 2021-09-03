@@ -1,6 +1,7 @@
 const initialState = {
   token: "",
   user: "",
+  groups:[],
   active_note: 0,
   active_notebook: 0,
   notes: [],
@@ -58,6 +59,8 @@ export default (state = loadState(), action) => {
       return initialState;
     case "SET_NUMBER_OF_TODOS":
       return { ...state, numberOfTodos: action.payload };
+    case "SET_USER_GROUPS":
+      return { ...state, groups: action.payload };
     default:
       return state;
   }

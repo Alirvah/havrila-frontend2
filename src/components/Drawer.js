@@ -1,7 +1,7 @@
 import "./maincss.css";
 
-import { API, HOST, TODO_URL } from "../config/constants";
-import React, { useEffect, useState } from "react";
+import { API, SYSTEM_URL, TODO_URL } from "../config/constants";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,16 +23,13 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
-import Notebook from "./notes/Notebooks";
 import NotesIcon from "@material-ui/icons/Notes";
-import PropTypes from "prop-types";
 import Router from "./Router";
 import TapAndPlayIcon from "@material-ui/icons/TapAndPlay";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
-import tokenStorage from "../helper/tokenStorage";
 
 const drawerWidth = 240;
 
@@ -80,6 +77,7 @@ function ResponsiveDrawer(props) {
   const dispatch = useDispatch();
   const todos = useSelector((store) => store.numberOfTodos);
   const user = useSelector((store) => store.user);
+  const groups = useSelector((store) => store.groups);
 
   useEffect(() => {
     axios.get(TODO_URL + API.TODO).then((r) => {
@@ -87,6 +85,12 @@ function ResponsiveDrawer(props) {
         dispatch({ type: "SET_NUMBER_OF_TODOS", payload: r.data.length });
       }
     });
+    axios.get(SYSTEM_URL + API.GET_GROUPS).then((r) => {
+      if (r.data) {
+        dispatch({ type: "SET_USER_GROUPS", payload: r.data.groups });
+      }
+    });
+    // eslint-disable-next-line
   }, []);
 
   const handleDrawerToggle = () => {
@@ -98,38 +102,48 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Notes", "Todo", "Filer", "Sensors", "Devices"].map((text, index) => (
-          <ListItem
-            component={Link}
-            to={`/${text.toLowerCase()}`}
-            button
-            key={text}
-          >
-            <ListItemIcon>
-              {index === 0 && <NotesIcon />}
-              {index === 1 && (
-                <Badge color="secondary" badgeContent={todos}>
-                  <MailIcon />
-                </Badge>
-              )}
-              {index === 2 && <FolderOpenIcon />}
-              {index === 3 && <TimelineIcon />}
-              {index === 4 && <TapAndPlayIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {groups.includes("admin") &&
+          ["Notes", "Todo", "Filer", "Sensors", "Devices", "Admin"].map(
+            (text, index) => (
+              <ListItem
+                component={Link}
+                to={`/${text.toLowerCase()}`}
+                button
+                key={text}
+              >
+                <ListItemIcon>
+                  {index === 0 && <NotesIcon />}
+                  {index === 1 && (
+                    <Badge color="secondary" badgeContent={todos}>
+                      <MailIcon />
+                    </Badge>
+                  )}
+                  {index === 2 && <FolderOpenIcon />}
+                  {index === 3 && <TimelineIcon />}
+                  {index === 4 && <TapAndPlayIcon />}
+                  {index === 5 && <TapAndPlayIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            )
+          )}
       </List>
       <Divider />
       <List>
-        {["Placeholder"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {groups.includes("minecraft") &&
+          ["Minecraft"].map((text, index) => (
+            <ListItem
+              component={Link}
+              to={`/${text.toLowerCase()}`}
+              button
+              key={text}
+            >
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
       </List>
     </div>
   );
