@@ -13,9 +13,9 @@ export const API = {
   EC2: "/ec2-server/",
 };
 
-//export const HOST =
-//  "https://3ru4fvt9t5.execute-api.eu-central-1.amazonaws.com/dev";
-export const HOST = "http://127.0.0.1:8000";
+export const HOST =
+  "https://3ru4fvt9t5.execute-api.eu-central-1.amazonaws.com/dev";
+//export const HOST = "http://127.0.0.1:8000";
 
 export const NOTE_URL = HOST + "/note/api/v1";
 export const TODO_URL = HOST + "/todo/api/v1";
