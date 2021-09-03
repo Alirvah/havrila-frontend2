@@ -40,7 +40,7 @@ const Minecraft = () => {
     }
     const timer = setInterval(() => {
       getStateAxios();
-    }, 300000); //5 min
+    }, 60000);
     return () => clearInterval(timer);
 
     // eslint-disable-next-line
