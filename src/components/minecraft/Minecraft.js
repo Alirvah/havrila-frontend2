@@ -127,6 +127,14 @@ const Minecraft = () => {
             >
               Refresh
             </Button>
+            <Button
+              type="text"
+              variant="outlined"
+              color="primary"
+              href="https://minecraft-world-download.s3.eu-central-1.amazonaws.com/world.tar.gz"
+            >
+              Download World
+            </Button>
           </div>
         </div>
       )}
