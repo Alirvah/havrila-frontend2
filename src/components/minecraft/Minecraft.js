@@ -234,7 +234,9 @@ const Minecraft = () => {
           {backups && (
             <div className={classes.backups}>
               <Typography>Last backup: {backups.lastBackup}</Typography>
-              <Typography>Last archive: {backups.lastArchive}</Typography>
+              <Typography>
+                Last archive to download: {backups.lastArchive}
+              </Typography>
             </div>
           )}
           <Typography>{message}</Typography>
