@@ -11,6 +11,9 @@ export const API = {
   STATUS: "/status/",
   GET_GROUPS: "/get-groups/",
   EC2: "/ec2-server/",
+  CHANGE_INSTANCE_TYPES: "/ec2-server-change-instance/",
+  GET_INSTANCE_TYPES: "/ec2-server-get-instances/",
+  S3_BACKUP: "/s3-backup/",
 };
 
 export const HOST =

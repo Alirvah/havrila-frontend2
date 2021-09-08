@@ -1,7 +1,7 @@
 const initialState = {
   token: "",
   user: "",
-  groups:[],
+  groups: [],
   active_note: 0,
   active_notebook: 0,
   notes: [],
@@ -33,7 +33,7 @@ const saveState = (state) => {
   }
 };
 
-export default (state = loadState(), action) => {
+const reduxState = (state = loadState(), action) => {
   switch (action.type) {
     case "SAVETOKEN":
       saveState({ ...state, token: action.payload });
@@ -65,3 +65,5 @@ export default (state = loadState(), action) => {
       return state;
   }
 };
+
+export default reduxState;
