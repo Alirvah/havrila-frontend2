@@ -109,7 +109,9 @@ const Minecraft = () => {
         }
       })
       .catch((e) => {
-        e?.status ? setError(e.status) : setError("something went wrong");
+        e?.data?.status
+          ? setError(e.data.status)
+          : setError("something went wrong");
       });
   };
 
@@ -285,7 +287,12 @@ const Minecraft = () => {
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={changeInstanceType} color="primary" autoFocus>
+              <Button
+                onClick={changeInstanceType}
+                disabled={instanceType === state.type}
+                color="primary"
+                autoFocus
+              >
                 Accept
               </Button>
             </DialogActions>
