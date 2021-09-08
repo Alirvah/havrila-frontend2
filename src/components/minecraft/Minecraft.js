@@ -69,17 +69,15 @@ const Minecraft = () => {
           setInstanceType(r.data.type);
         }
       });
+      axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
+        if (r.data) {
+          setBackups(r.data);
+        }
+      });
       if (instanceTypes.length <= 0) {
         axios.post(SYSTEM_URL + API.GET_INSTANCE_TYPES, {}).then((r) => {
           if (r.data) {
             setInstanceTypes(r.data.types);
-          }
-        });
-      }
-      if (instanceTypes.length <= 0) {
-        axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
-          if (r.data) {
-            setBackups(r.data);
           }
         });
       }
