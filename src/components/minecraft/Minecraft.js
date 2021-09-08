@@ -257,7 +257,7 @@ const Minecraft = () => {
             </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {"Change instance type of a Minecraft server"}
+                {"Please first stop the instance"}
               </DialogContentText>
               <FormControl
                 className={classes.formControl}
