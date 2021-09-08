@@ -259,10 +259,7 @@ const Minecraft = () => {
               <DialogContentText id="alert-dialog-description">
                 {"Please first stop the instance"}
               </DialogContentText>
-              <FormControl
-                className={classes.formControl}
-                disabled={state.status !== "stopped"}
-              >
+              <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-native-simple">
                   Instance Type
                 </InputLabel>
@@ -289,7 +286,9 @@ const Minecraft = () => {
               </Button>
               <Button
                 onClick={changeInstanceType}
-                disabled={instanceType === state.type}
+                disabled={
+                  instanceType === state.type || state.status === "running"
+                }
                 color="primary"
                 autoFocus
               >
