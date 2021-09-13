@@ -14,6 +14,7 @@ export const API = {
   CHANGE_INSTANCE_TYPES: "/ec2-server-change-instance/",
   GET_INSTANCE_TYPES: "/ec2-server-get-instances/",
   S3_BACKUP: "/s3-backup/",
+  ONLINE: "/online/latest",
 };
 
 export const HOST =
@@ -25,5 +26,6 @@ export const TODO_URL = HOST + "/todo/api/v1";
 export const FILE_URL = HOST + "/file/api/v1";
 export const WIFI_URL = HOST + "/wifi/api/v1";
 export const SENS_URL = HOST + "/sensors/api/v1";
+export const SYSTEM_URL_2 = HOST + "/system";
 
 export const SYSTEM_URL = HOST + "/api";

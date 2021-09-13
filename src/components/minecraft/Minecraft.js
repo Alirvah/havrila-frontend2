@@ -1,4 +1,4 @@
-import { API, SYSTEM_URL } from "../../config/constants";
+import { API, SYSTEM_URL, SYSTEM_URL_2 } from "../../config/constants";
 import {
   Button,
   Dialog,
@@ -18,6 +18,7 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import StopIcon from "@material-ui/icons/Stop";
 import axios from "axios";
 import { makeStyles } from "@material-ui/styles";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   parrent: {
@@ -56,6 +57,8 @@ const Minecraft = () => {
   const [open, setOpen] = useState(false);
   const [instanceType, setInstanceType] = useState("");
   const [backups, setBackups] = useState(null);
+  const [online, setOnline] = useState(null);
+  const groups = useSelector((store) => store.groups) || "";
 
   const classes = useStyles();
 
@@ -72,6 +75,11 @@ const Minecraft = () => {
       axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
         if (r.data) {
           setBackups(r.data);
+        }
+      });
+      axios.get(SYSTEM_URL_2 + API.ONLINE, {}).then((r) => {
+        if (r.data) {
+          setOnline(r.data);
         }
       });
       if (instanceTypes.length <= 0) {
@@ -233,13 +241,27 @@ const Minecraft = () => {
           </div>
           {backups && (
             <div className={classes.backups}>
-              <Typography>Last backup: {backups.lastBackup}</Typography>
               <Typography>
-                Last archive to download: {backups.lastArchive}
+                Last backup: {new Date(backups.lastBackup).toString()}
+              </Typography>
+              <Typography>
+                Last archive to download:{" "}
+                {new Date(backups.lastArchive).toString()}
               </Typography>
             </div>
           )}
           <Typography>{message}</Typography>
+          {groups.includes("admin") &&
+            online &&
+            (() => {
+              const now = new Date();
+              const created_at = new Date(online.created_at);
+              if (created_at > now.setMinutes(now.getMinutes() - 60)) {
+                return (
+                  <Typography>{`Online: ${online.name} - ${created_at}`}</Typography>
+                );
+              }
+            })()}
           {error && <Typography className={classes.error}>{error}</Typography>}
           {message && (
             <Typography className={classes.message}>{message}</Typography>
