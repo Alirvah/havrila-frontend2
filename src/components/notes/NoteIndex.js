@@ -2,14 +2,28 @@ import { API, NOTE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Grid from "@material-ui/core/Grid";
 import Notebook from "./Notebooks";
 import Notes from "./Notes";
 import Quill from "./Quill";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  noteBox: {
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  notes: {
+    marginRight: "1em",
+  },
+  noteBar: {
+    marginBottom: "1em",
+  },
+}));
 
 export default function Note() {
   const dispatch = useDispatch();
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const refresh = useSelector((store) => store.refresh);
   const active_notebook = useSelector((store) => store.active_notebook);
@@ -31,18 +45,17 @@ export default function Note() {
 
   return (
     <>
-      <Grid container>
-        <Grid item xs={12}>
-          <Notebook />
-          <br />
-        </Grid>
-        <Grid item xs={3} style={{ paddingRight: "10px" }}>
+      <div className={classes.noteBar}>
+        <Notebook />
+      </div>
+      <div className={classes.noteBox}>
+        <div className={classes.notes}>
           <Notes />
-        </Grid>
-        <Grid item xs={9}>
+        </div>
+        <div>
           <Quill />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 }

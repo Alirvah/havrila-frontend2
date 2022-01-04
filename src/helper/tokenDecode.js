@@ -1,7 +1,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-var b64re =
-  /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+// eslint-disable-next-line
+var b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
 exports.weBtoa = function (string) {
   string = String(string);
   var bitmap,
@@ -83,6 +83,7 @@ function base64_url_decode(str) {
       output += "=";
       break;
     default:
+      // eslint-disable-next-line
       throw "Illegal base64url string!";
   }
   try {
@@ -93,6 +94,7 @@ function base64_url_decode(str) {
 }
 function weappJwtDecode(token, options) {
   if (typeof token !== "string") {
+    // eslint-disable-next-line
     throw "Invalid token specified";
   }
   options = options || {};
@@ -100,6 +102,7 @@ function weappJwtDecode(token, options) {
   try {
     return JSON.parse(base64_url_decode(token.split(".")[pos]));
   } catch (e) {
+    // eslint-disable-next-line
     throw "Invalid token specified: " + e.message;
   }
 }

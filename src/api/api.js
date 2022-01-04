@@ -1,6 +1,4 @@
-import { HOST } from "../config/constants";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import weappJwt from "../helper/tokenDecode";
 
 // Add a request interceptor
