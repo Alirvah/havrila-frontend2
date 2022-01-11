@@ -58,6 +58,7 @@ const Minecraft = () => {
   const [instanceType, setInstanceType] = useState("");
   const [backups, setBackups] = useState(null);
   const [online, setOnline] = useState(null);
+  const [ipAddress, setIpAddress] = useState("");
   const groups = useSelector((store) => store.groups) || "";
 
   const classes = useStyles();
@@ -70,6 +71,7 @@ const Minecraft = () => {
         if (r.data) {
           setState(r.data);
           setInstanceType(r.data.type);
+          setIpAddress(r.data.ip);
         }
       });
       axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
@@ -241,6 +243,7 @@ const Minecraft = () => {
           </div>
           {backups && (
             <div className={classes.backups}>
+              <Typography>IP Address: {ipAddress}</Typography>
               <Typography>
                 Last backup: {new Date(backups.lastBackup).toString()}
               </Typography>
