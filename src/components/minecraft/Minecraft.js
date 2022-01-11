@@ -58,7 +58,6 @@ const Minecraft = () => {
   const [instanceType, setInstanceType] = useState("");
   const [backups, setBackups] = useState(null);
   const [online, setOnline] = useState(null);
-  const [ipAddress, setIpAddress] = useState("");
   const groups = useSelector((store) => store.groups) || "";
 
   const classes = useStyles();
@@ -71,7 +70,6 @@ const Minecraft = () => {
         if (r.data) {
           setState(r.data);
           setInstanceType(r.data.type);
-          setIpAddress(r.data.ip);
         }
       });
       axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
@@ -189,7 +187,7 @@ const Minecraft = () => {
         <div className={classes.parrent}>
           <Typography>Minecraft Server State:</Typography>
           {renderSwitch(state.status)}
-          <Typography>Instance type: {state.type}</Typography>
+          <Typography>IP Address: {state.ip}</Typography>
           <div className={classes.buttons}>
             <Button
               className={classes.button}
@@ -229,7 +227,7 @@ const Minecraft = () => {
               disabled={state === "refresh"}
               onClick={() => setOpen(true)}
             >
-              Change Instance Type
+              {state.type}
             </Button>
             <Button
               className={classes.button}
@@ -243,7 +241,6 @@ const Minecraft = () => {
           </div>
           {backups && (
             <div className={classes.backups}>
-              <Typography>IP Address: {ipAddress}</Typography>
               <Typography>
                 Last backup: {new Date(backups.lastBackup).toString()}
               </Typography>
@@ -295,11 +292,15 @@ const Minecraft = () => {
                     id: "age-native-simple",
                   }}
                 >
-                  {instanceTypes.map((instance, i) => (
-                    <option key={i} value={instance}>
-                      {instance}
-                    </option>
-                  ))}
+                  {instanceTypes
+                    .filter(
+                      (e) => groups.includes("admin") || !e.includes("large")
+                    )
+                    .map((instance, i) => (
+                      <option key={i} value={instance}>
+                        {instance}
+                      </option>
+                    ))}
                 </Select>
               </FormControl>
             </DialogContent>
