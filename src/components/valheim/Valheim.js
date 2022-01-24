@@ -197,6 +197,7 @@ const Minecraft = () => {
           </Typography>
           {renderSwitch(state.status)}
           <Typography>IP Address: {state.ip}</Typography>
+          <Typography>Password: heslo123</Typography>
           <div className={classes.buttons}>
             <Button
               className={classes.button}
