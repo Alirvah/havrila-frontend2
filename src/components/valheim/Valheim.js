@@ -67,7 +67,7 @@ const Minecraft = () => {
     setMessage(null);
     const getStateAxios = () => {
       axios
-        .post(SYSTEM_URL + API.EC2, { instance: "minecraft", action: "state" })
+        .post(SYSTEM_URL + API.EC2, { instance: "valheim", action: "state" })
         .then((r) => {
           if (r.data) {
             setState(r.data);
@@ -109,7 +109,7 @@ const Minecraft = () => {
     axios
       .post(SYSTEM_URL + API.CHANGE_INSTANCE_TYPES, {
         newInstance: instanceType,
-        instance: "minecraft",
+        instance: "valheim",
       })
       .then((r) => {
         if (r.data) {
@@ -130,7 +130,7 @@ const Minecraft = () => {
 
   const handleStart = () => {
     axios
-      .post(SYSTEM_URL + API.EC2, { instance: "minecraft", action: "start" })
+      .post(SYSTEM_URL + API.EC2, { instance: "valheim", action: "start" })
       .then((r) => {
         if (r.data) {
           setState(r.data);
@@ -140,7 +140,7 @@ const Minecraft = () => {
 
   const handleStop = () => {
     axios
-      .post(SYSTEM_URL + API.EC2, { instance: "minecraft", action: "stop" })
+      .post(SYSTEM_URL + API.EC2, { instance: "valheim", action: "stop" })
       .then((r) => {
         if (r.data) {
           setState(r.data);
@@ -193,7 +193,7 @@ const Minecraft = () => {
       ) : (
         <div className={classes.parrent}>
           <Typography>
-            <h2>Minecraft</h2>
+            <h2>Valheim</h2>
           </Typography>
           {renderSwitch(state.status)}
           <Typography>IP Address: {state.ip}</Typography>
@@ -238,40 +238,8 @@ const Minecraft = () => {
             >
               {state.type}
             </Button>
-            {/*<Button
-              className={classes.button}
-              type="text"
-              variant="outlined"
-              color="primary"
-              href="https://minecraft-world-download.s3.eu-central-1.amazonaws.com/world.tar.gz"
-            >
-              Download World
-            </Button>
-            */}
           </div>
-          {backups && (
-            <div className={classes.backups}>
-              <Typography>
-                Last backup: {new Date(backups.lastBackup).toString()}
-              </Typography>
-              <Typography>
-                Last archive to download:{" "}
-                {new Date(backups.lastArchive).toString()}
-              </Typography>
-            </div>
-          )}
           <Typography>{message}</Typography>
-          {groups.includes("admin") &&
-            online &&
-            (() => {
-              const now = new Date();
-              const created_at = new Date(online.created_at);
-              if (created_at > now.setMinutes(now.getMinutes() - 60)) {
-                return (
-                  <Typography>{`Online: ${online.name} - ${created_at}`}</Typography>
-                );
-              }
-            })()}
           {error && <Typography className={classes.error}>{error}</Typography>}
           {message && (
             <Typography className={classes.message}>{message}</Typography>

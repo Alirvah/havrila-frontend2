@@ -139,7 +139,23 @@ function ResponsiveDrawer(props) {
               key={text}
             >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+      </List>
+      <List>
+        {groups.includes("valheim") &&
+          ["Valheim"].map((text, index) => (
+            <ListItem
+              component={Link}
+              to={`/${text.toLowerCase()}`}
+              button
+              key={text}
+            >
+              <ListItemIcon>
+                <InboxIcon />
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
