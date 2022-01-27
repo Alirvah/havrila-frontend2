@@ -242,7 +242,8 @@ const Minecraft = () => {
           {logs.slice(0, 10).map((log) => (
             <p>
               <b>{log.created_at.split(".")[0].replace("T", " - ")}</b>: user{" "}
-              {log.user} {log.operation}
+              <u>{log.user}</u> {log.operation}{" "}
+              {!log.operation.includes("changed") && "valheim server"}
             </p>
           ))}
           <Dialog
