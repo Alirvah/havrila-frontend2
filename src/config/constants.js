@@ -15,6 +15,7 @@ export const API = {
   GET_INSTANCE_TYPES: "/ec2-server-get-instances/",
   S3_BACKUP: "/s3-backup/",
   ONLINE: "/online/latest",
+  SERVER: "/server/",
 };
 
 export const HOST =

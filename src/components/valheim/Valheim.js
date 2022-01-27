@@ -56,8 +56,7 @@ const Minecraft = () => {
   const [message, setMessage] = useState(null);
   const [open, setOpen] = useState(false);
   const [instanceType, setInstanceType] = useState("");
-  const [backups, setBackups] = useState(null);
-  const [online, setOnline] = useState(null);
+  const [logs, setLogs] = useState([]);
   const groups = useSelector((store) => store.groups) || "";
 
   const classes = useStyles();
@@ -74,14 +73,9 @@ const Minecraft = () => {
             setInstanceType(r.data.type);
           }
         });
-      axios.post(SYSTEM_URL + API.S3_BACKUP, {}).then((r) => {
+      axios.get(SYSTEM_URL_2 + API.SERVER + "?server=valheim", {}).then((r) => {
         if (r.data) {
-          setBackups(r.data);
-        }
-      });
-      axios.get(SYSTEM_URL_2 + API.ONLINE, {}).then((r) => {
-        if (r.data) {
-          setOnline(r.data);
+          setLogs(r.data);
         }
       });
       if (instanceTypes.length <= 0) {
@@ -245,6 +239,12 @@ const Minecraft = () => {
           {message && (
             <Typography className={classes.message}>{message}</Typography>
           )}
+          {logs.slice(0, 10).map((log) => (
+            <p>
+              <b>{log.created_at.split(".")[0].replace("T", " - ")}</b>: user{" "}
+              {log.user} {log.operation}
+            </p>
+          ))}
           <Dialog
             open={open}
             onClose={handleClose}
