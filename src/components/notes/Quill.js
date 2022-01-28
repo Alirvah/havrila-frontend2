@@ -112,6 +112,7 @@ const Quill = () => {
           color={state.readonly ? "default" : "primary"}
           disableElevation
           onClick={handleSave}
+          disabled={state.readonly}
         >
           save
         </Button>
