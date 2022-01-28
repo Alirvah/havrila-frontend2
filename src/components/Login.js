@@ -64,11 +64,7 @@ export default function FormPropsTextFields() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Havrila.net
-          </Typography>
-        </Toolbar>
+        <Toolbar></Toolbar>
       </AppBar>
 
       <div className="App">
