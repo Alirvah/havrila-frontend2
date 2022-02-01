@@ -19,6 +19,7 @@ import StopIcon from "@material-ui/icons/Stop";
 import axios from "axios";
 import { makeStyles } from "@material-ui/styles";
 import { useSelector } from "react-redux";
+import Donate from "../../helper/Donation";
 
 const useStyles = makeStyles((theme) => ({
   parrent: {
@@ -233,6 +234,7 @@ const Minecraft = () => {
             >
               {state.type}
             </Button>
+            <Donate />
           </div>
           <Typography>{message}</Typography>
           {error && <Typography className={classes.error}>{error}</Typography>}
@@ -246,6 +248,7 @@ const Minecraft = () => {
               {!log.operation.includes("changed") && "valheim server"}
             </p>
           ))}
+
           <Dialog
             open={open}
             onClose={handleClose}

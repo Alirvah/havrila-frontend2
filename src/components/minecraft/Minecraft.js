@@ -19,6 +19,7 @@ import StopIcon from "@material-ui/icons/Stop";
 import axios from "axios";
 import { makeStyles } from "@material-ui/styles";
 import { useSelector } from "react-redux";
+import Donate from "../../helper/Donation";
 
 const useStyles = makeStyles((theme) => ({
   parrent: {
@@ -246,6 +247,7 @@ const Minecraft = () => {
             >
               {state.type}
             </Button>
+            <Donate />
             {/*<Button
               className={classes.button}
               type="text"
