@@ -40,7 +40,7 @@ export default function Note() {
   }, [refresh]);
 
   if (loading) {
-    return <>loading..</>;
+    return <>loading...</>;
   }
 
   return (
