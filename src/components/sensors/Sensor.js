@@ -66,7 +66,7 @@ const Sensor = () => {
         const now = new Date();
         const lastTs = new Date(r.data[0].ts * 1e3);
         const delta = now.getTime() - lastTs.getTime();
-        delta < 120e3 && setStateRpi(true);
+        delta < 400e3 && setStateRpi(true);
         setLastOnline(new Date(r.data[0].ts * 1e3));
 
         const ts = r.data.map((e) => new Date(e.ts * 1e3));
