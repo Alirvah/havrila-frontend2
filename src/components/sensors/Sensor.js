@@ -1,8 +1,8 @@
-import { API, SENS_URL } from "../../config/constants";
+import { API, SENS_URL, SYSTEM_URL_2 } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
 import { Grid } from "@material-ui/core";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import StopIcon from "@material-ui/icons/Stop";
 import axios from "axios";
@@ -57,6 +57,7 @@ const Sensor = () => {
     pressure: {},
     humidity: {},
   });
+  const [dataFup, setDataFup] = useState({});
   const [stateRpi, setStateRpi] = useState(false);
   const [lastOnline, setLastOnline] = useState("");
 
@@ -183,6 +184,28 @@ const Sensor = () => {
         });
       }
     });
+    axios.get(SYSTEM_URL_2 + API.FUP).then((r) => {
+      if (r.data) {
+        const reversedData = r.data.reverse();
+        setDataFup({
+          labels: reversedData.map((fup) => fup.date),
+          datasets: [
+            {
+              label: "Download",
+              data: reversedData.map((fup) => fup.download / 1e3),
+              borderWidth: 1,
+              backgroundColor: "blue",
+            },
+            {
+              label: "Upload",
+              data: reversedData.map((fup) => fup.upload / 1e3),
+              borderWidth: 1,
+              backgroundColor: "green",
+            },
+          ],
+        });
+      }
+    });
     // eslint-disable-next-line
   }, []);
 
@@ -256,6 +279,9 @@ const Sensor = () => {
               ></Line>
             </Grid>
           </>
+        )}
+        {dataFup && (
+          <Bar data={dataFup} options={datasetOpts("Throughput", "GB")}></Bar>
         )}
       </Grid>
     </>

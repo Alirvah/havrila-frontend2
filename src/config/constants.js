@@ -16,6 +16,7 @@ export const API = {
   S3_BACKUP: "/s3-backup/",
   ONLINE: "/online/latest",
   SERVER: "/server/",
+  FUP: "/fup/",
 };
 
 export const HOST =
