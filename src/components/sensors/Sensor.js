@@ -281,7 +281,7 @@ const Sensor = () => {
           </>
         )}
         {dataFup && (
-          <Bar data={dataFup} options={datasetOpts("Throughput", "GB")}></Bar>
+          <Bar data={dataFup} options={datasetOpts("Internet", "GB")}></Bar>
         )}
       </Grid>
     </>
