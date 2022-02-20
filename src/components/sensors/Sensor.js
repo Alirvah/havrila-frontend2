@@ -76,14 +76,14 @@ const Sensor = () => {
             labels: ts,
             datasets: [
               datasetDetails(
-                r.data.map((e) => e.cpu),
-                "CPU",
-                "blue"
-              ),
-              datasetDetails(
                 r.data.map((e) => e.mem),
                 "RAM",
                 "green"
+              ),
+              datasetDetails(
+                r.data.map((e) => e.cpu),
+                "CPU",
+                "blue"
               ),
               datasetDetails(
                 r.data.map((e) => e.disk),
