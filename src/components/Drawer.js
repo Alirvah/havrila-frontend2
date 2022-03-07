@@ -30,6 +30,7 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
+import { SportsEsports } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -103,30 +104,37 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
         {groups.includes("admin") &&
-          ["Notes", "Todo", "Filer", "Sensors", "Devices", "Admin"].map(
-            (text, index) => (
-              <ListItem
-                component={Link}
-                to={`/${text.toLowerCase()}`}
-                button
-                key={text}
-              >
-                <ListItemIcon>
-                  {index === 0 && <NotesIcon />}
-                  {index === 1 && (
-                    <Badge color="secondary" badgeContent={todos}>
-                      <MailIcon />
-                    </Badge>
-                  )}
-                  {index === 2 && <FolderOpenIcon />}
-                  {index === 3 && <TimelineIcon />}
-                  {index === 4 && <TapAndPlayIcon />}
-                  {index === 5 && <TapAndPlayIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
+          [
+            "Notes",
+            "Todo",
+            "Filer",
+            "Sensors",
+            "Devices",
+            "Admin",
+            "Canvas",
+          ].map((text, index) => (
+            <ListItem
+              component={Link}
+              to={`/${text.toLowerCase()}`}
+              button
+              key={text}
+            >
+              <ListItemIcon>
+                {index === 0 && <NotesIcon />}
+                {index === 1 && (
+                  <Badge color="secondary" badgeContent={todos}>
+                    <MailIcon />
+                  </Badge>
+                )}
+                {index === 2 && <FolderOpenIcon />}
+                {index === 3 && <TimelineIcon />}
+                {index === 4 && <TapAndPlayIcon />}
+                {index === 5 && <TapAndPlayIcon />}
+                {index === 6 && <SportsEsports />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
       </List>
       <Divider />
       <List>

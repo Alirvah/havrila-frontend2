@@ -12,6 +12,7 @@ import React from "react";
 import Sensor from "./sensors/Sensor";
 import Todo from "./todo/Todo";
 import Wifi from "./wifi/Devices";
+import Canvas from "./games/Canvas";
 
 export default function Notebooks() {
   return (
@@ -28,6 +29,9 @@ export default function Notebooks() {
         </Route>
         <Route path="/sensors">
           <Sensor />
+        </Route>
+        <Route path="/canvas">
+          <Canvas />
         </Route>
         <Route path="/devices">
           <Wifi />
