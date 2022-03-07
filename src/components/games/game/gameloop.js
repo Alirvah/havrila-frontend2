@@ -57,8 +57,8 @@ const collors = ["yellow", "blue", "red", "green", "white", "orange"];
 const gameloop = () => {
   cnv = document.getElementById("myCanvas");
   ctx = cnv.getContext("2d");
-  cnv.width = window.innerWidth / 1.3;
-  cnv.height = window.innerHeight / 1.3;
+  cnv.width = window.innerWidth;
+  cnv.height = window.innerHeight;
   setup();
   setInterval(() => {
     update();
