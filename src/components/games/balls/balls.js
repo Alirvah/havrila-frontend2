@@ -32,15 +32,15 @@ const Ball = class {
     ctx.fill();
   }
   update(cnv, otherballs) {
+    this.checkForCollisions(cnv, otherballs);
     this.x += this.xvel;
     this.y += this.yvel;
-    this.checkForCollisions(cnv, otherballs);
   }
   checkForCollisions(cnv, otherballs) {
-    if (this.x + this.size / 2 > cnv.width || this.x - this.size / 2 < 0) {
+    if (this.x + this.size > cnv.width || this.x - this.size < 0) {
       this.xvel = -this.xvel;
     }
-    if (this.y + this.size / 2 > cnv.height || this.y - this.size / 2 < 0) {
+    if (this.y + this.size > cnv.height || this.y - this.size < 0) {
       this.yvel = -this.yvel;
     }
     otherballs.forEach((ball) => {
@@ -48,7 +48,8 @@ const Ball = class {
         const dx = this.x - ball.x;
         const dy = this.y - ball.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (this.size + ball.size >= dist) {
+        const collision = this.size + ball.size >= dist;
+        if (collision) {
           this.yvel = -this.yvel;
           this.xvel = -this.xvel;
         }
@@ -78,7 +79,7 @@ const setup = () => {
       new Ball(
         Math.random() * cnv.width,
         Math.random() * cnv.height,
-        Math.random() * 10 + 1,
+        Math.random() * 10 + 2,
         collors[Math.floor(Math.random() * collors.length)],
         Math.random() * 6 + 1,
         Math.random() * 6 + 1
