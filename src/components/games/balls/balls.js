@@ -1,7 +1,7 @@
 let loop;
 let fps = 30;
 let cnv, ctx;
-let numberOfBalls = 100;
+let numberOfBalls = 50;
 let balls = [];
 
 const collors = [
