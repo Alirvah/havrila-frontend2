@@ -13,6 +13,8 @@ import Sensor from "./sensors/Sensor";
 import Todo from "./todo/Todo";
 import Wifi from "./wifi/Devices";
 import Canvas from "./games/Canvas";
+import Balls from "./games/Balls";
+import Planets from "./games/Planets";
 
 export default function Notebooks() {
   return (
@@ -32,6 +34,12 @@ export default function Notebooks() {
         </Route>
         <Route path="/canvas">
           <Canvas />
+          <Route path="/canvas/balls">
+            <Balls />
+          </Route>
+          <Route path="/canvas/planets">
+            <Planets />
+          </Route>
         </Route>
         <Route path="/devices">
           <Wifi />

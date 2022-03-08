@@ -1,5 +1,20 @@
+let loop;
 let fps = 30;
 let cnv, ctx;
+let numberOfBalls = 100;
+let balls = [];
+
+const collors = [
+  "yellow",
+  "blue",
+  "red",
+  "green",
+  "white",
+  "orange",
+  "brown",
+  "cyan",
+  "navy",
+];
 
 const Ball = class {
   constructor(x, y, size, color, xv, yv) {
@@ -30,67 +45,57 @@ const Ball = class {
     }
     otherballs.forEach((ball) => {
       if (this !== ball) {
-        if (this.areCirclesIntersecting(ball)) {
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (this.size + ball.size >= dist) {
           this.yvel = -this.yvel;
           this.xvel = -this.xvel;
         }
       }
     });
   }
-
-  areCirclesIntersecting(c) {
-    const dx = this.x - c.x;
-    const dy = this.y - c.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (this.size + c.size >= dist) {
-      return true;
-    }
-    return false;
-  }
 };
 
-let sun = new Ball(20, 100, 30, "yellow");
-let balls = [];
-
-const collors = ["yellow", "blue", "red", "green", "white", "orange"];
-
-const gameloop = () => {
-  cnv = document.getElementById("myCanvas");
+const ballgame = () => {
+  cnv = document.getElementById("ballsCanvas");
   ctx = cnv.getContext("2d");
-  cnv.width = window.innerWidth;
-  cnv.height = window.innerHeight;
+  cnv.width = window.innerWidth / 1.3;
+  cnv.height = window.innerHeight / 1.3;
+  ctx.clearRect(0, 0, cnv.width, cnv.height);
   setup();
-  setInterval(() => {
+  loop = setInterval(() => {
     update();
     render();
   }, 1000 / fps);
+  return loop;
 };
 
 const setup = () => {
-  for (let i = 0; i < 50; i++) {
+  balls = [];
+  for (let i = 0; i < numberOfBalls; i++) {
     balls.push(
       new Ball(
         Math.random() * cnv.width,
         Math.random() * cnv.height,
         Math.random() * 10 + 1,
         collors[Math.floor(Math.random() * collors.length)],
-        Math.random() * 4,
-        Math.random() * 4
+        Math.random() * 6 + 1,
+        Math.random() * 6 + 1
       )
     );
   }
 };
 
 const update = () => {
-  sun.update(cnv, balls);
   balls.forEach((ball) => ball.update(cnv, balls));
 };
 
 const render = () => {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
-  sun.draw(ctx);
+
   balls.forEach((ball) => ball.draw(ctx));
 };
 
-export default gameloop;
+export default ballgame;

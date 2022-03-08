@@ -1,10 +1,26 @@
-import React, { useEffect } from "react";
-import gameloop from "./game/gameloop";
+import { Button } from "@material-ui/core";
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function App() {
-  useEffect(() => {
-    gameloop();
-  }, []);
+const style = {
+  marginRight: "1rem",
+  marginBottom: "1rem",
+};
 
-  return <canvas id="myCanvas" style={{ border: "1px solid #d3d3d3" }} />;
+export default function Canvas() {
+  return (
+    <>
+      <Link to="/canvas/balls">
+        <Button style={style} variant="contained" color="primary">
+          Balls
+        </Button>
+      </Link>
+      <Link to="/canvas/planets">
+        <Button style={style} variant="contained" color="primary">
+          Planets
+        </Button>
+      </Link>
+      <br />
+    </>
+  );
 }
