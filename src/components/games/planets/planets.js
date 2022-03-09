@@ -6,10 +6,10 @@ let planets = [];
 
 const Planet = class {
   constructor(name, au, size, color) {
-    const AU = 149.6e9;
-    const G = 6.67428e-11;
-    const SCALE = 250 / AU;
-    const TIME = 3600 * 24;
+    //const AU = 149.6e9;
+    //const G = 6.67428e-11;
+    //const SCALE = 250 / AU;
+    //const TIME = 3600 * 24;
 
     this.speed_constant = 30;
     this.name = name;
