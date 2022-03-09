@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const style = {
@@ -8,6 +8,22 @@ const style = {
 };
 
 export default function Canvas() {
+  const [test, setTest] = useState(null);
+  function motion(event) {
+    setTest(
+      "Accelerometer: " +
+        event.accelerationIncludingGravity.x +
+        ", " +
+        event.accelerationIncludingGravity.y +
+        ", " +
+        event.accelerationIncludingGravity.z
+    );
+  }
+  if (window.DeviceMotionEvent) {
+    window.addEventListener("devicemotion", motion, false);
+  } else {
+    console.log("DeviceMotionEvent is not supported");
+  }
   return (
     <>
       <Link to="/canvas/balls">
@@ -20,6 +36,7 @@ export default function Canvas() {
           Planets
         </Button>
       </Link>
+      <p>{test}</p>
       <br />
     </>
   );
