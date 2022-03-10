@@ -15,6 +15,7 @@ import Wifi from "./wifi/Devices";
 import Canvas from "./games/Canvas";
 import Balls from "./games/Balls";
 import Planets from "./games/Planets";
+import Cube from "./games/Cube";
 
 export default function Notebooks() {
   return (
@@ -39,6 +40,9 @@ export default function Notebooks() {
           </Route>
           <Route path="/canvas/planets">
             <Planets />
+          </Route>
+          <Route path="/canvas/cube">
+            <Cube />
           </Route>
         </Route>
         <Route path="/devices">

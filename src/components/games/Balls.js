@@ -3,7 +3,7 @@ import balls from "./balls/balls.js";
 
 export default function Balls() {
   useEffect(() => {
-    const game = balls();
+    const game = balls("ballsCanvas");
     return () => {
       clearInterval(game);
     };

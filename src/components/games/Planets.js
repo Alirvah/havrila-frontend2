@@ -3,7 +3,7 @@ import planets from "./planets/planets";
 
 export default function Planets() {
   useEffect(() => {
-    const game = planets();
+    const game = planets("planetCanvas");
     return () => {
       clearInterval(game);
     };

@@ -1,4 +1,3 @@
-let loop;
 let fps = 30;
 let cnv, ctx;
 
@@ -68,12 +67,6 @@ const Planet = class {
 };
 
 const setup = () => {
-  cnv = document.getElementById("planetCanvas");
-  ctx = cnv.getContext("2d");
-  cnv.width = window.innerWidth / 1.3;
-  cnv.height = window.innerHeight / 1.3;
-  ctx.clearRect(0, 0, cnv.width, cnv.height);
-
   planets = [];
   planets.push(new Planet("Sun", 0, 20, "yellow"));
   planets.push(new Planet("Mercury", 1, 5, "gray"));
@@ -98,24 +91,24 @@ const setup = () => {
   //planets.push(new Planet("Neptune", 30.06, 24622, "navy"));
 };
 
-const update = () => {
-  planets.forEach((planet) => planet.update(cnv));
-};
-
 const render = () => {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
 
+  planets.forEach((planet) => planet.update(cnv));
   planets.forEach((planet) => planet.draw(ctx));
 };
 
-const planetsGame = () => {
+const planetsGame = (canvasName) => {
+  cnv = document.getElementById(canvasName);
+  ctx = cnv.getContext("2d");
+  cnv.width = window.innerWidth / 1.3;
+  cnv.height = window.innerHeight / 1.3;
+  ctx.clearRect(0, 0, cnv.width, cnv.height);
   setup();
-  loop = setInterval(() => {
-    update();
+  return setInterval(() => {
     render();
   }, 1000 / fps);
-  return loop;
 };
 
 export default planetsGame;

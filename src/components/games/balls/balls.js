@@ -1,40 +1,35 @@
-let loop;
+import Vector from "../lib/vector";
+
 let fps = 30;
 let cnv, ctx;
 let numberOfBalls = 50;
 let balls = [];
+let b;
 
 const collors = [
   "yellow",
   "blue",
   "red",
   "green",
-  "white",
   "orange",
   "brown",
   "cyan",
   "navy",
 ];
 
-const Vector = class {
-  constructor(x, y) {
-    this.x = x || 0;
-    this.y = y || 0;
-  }
-};
-
 const Ball = class {
   constructor(x, y, size, color, v) {
     const G = 1;
-    this.lossCoeficient = 0.7;
+    //this.lossCoeficient = 0.5;
+    this.lossCoeficient = 0.1;
     this.x = x;
     this.y = y;
     this.size = size;
     this.m = size;
     this.color = color;
     this.v = v || new Vector();
-    this.a = new Vector(0, G);
-    //this.a = new Vector();
+    //this.a = new Vector(0, G);
+    this.a = new Vector();
   }
   draw(ctx) {
     ctx.fillStyle = this.color;
@@ -44,11 +39,13 @@ const Ball = class {
   }
   update(cnv, balls) {
     this.checkForCollisions(cnv, balls);
-    this.v.x += this.a.x;
-    this.v.y += this.a.y;
+    if (this.color !== "white") {
+      this.v.x += this.a.x;
+      this.v.y += this.a.y;
 
-    this.x += this.v.x;
-    this.y += this.v.y;
+      this.x += this.v.x;
+      this.y += this.v.y;
+    }
   }
   checkForCollisions(cnv, balls) {
     const xsubs = this.x - this.size;
@@ -108,23 +105,8 @@ const Ball = class {
   }
 };
 
-const ballgame = () => {
-  cnv = document.getElementById("ballsCanvas");
-  ctx = cnv.getContext("2d");
-  cnv.width = Math.floor(window.innerWidth / 1.3);
-  cnv.height = Math.floor(window.innerHeight / 1.3);
-  ctx.clearRect(0, 0, cnv.width, cnv.height);
-  setup();
-  loop = setInterval(() => {
-    update();
-    render();
-  }, 1000 / fps);
-  return loop;
-};
-
 const setup = () => {
   balls = [];
-  //balls.push(new Ball(100, 400, 10, "red", new Vector(6, 0)));
   //balls.push(new Ball(400, 401, 10, "blue", new Vector(-6, 0)));
   for (let i = 0; i < numberOfBalls; i++) {
     balls.push(
@@ -143,15 +125,52 @@ const setup = () => {
   }
 };
 
-const update = () => {
-  balls.forEach((ball) => ball.update(cnv, balls));
-};
-
 const render = () => {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
 
+  balls.forEach((ball) => ball.update(cnv, balls));
   balls.forEach((ball) => ball.draw(ctx));
+  b.update(cnv, balls);
+  b.draw(ctx);
+};
+
+const ballgame = (canvasName) => {
+  cnv = document.getElementById(canvasName);
+  ctx = cnv.getContext("2d");
+  cnv.width = Math.floor(window.innerWidth / 1.3);
+  cnv.height = Math.floor(window.innerHeight / 1.3);
+
+  //function getCursorPosition(canvas, event) {
+  //  const rect = canvas.getBoundingClientRect();
+  //  const x = event.clientX - rect.left;
+  //  const y = event.clientY - rect.top;
+  //  console.log("x: " + x + " y: " + y);
+  //}
+  const canvas = document.querySelector("canvas");
+  canvas.addEventListener("mousedown", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    console.log("clicked x: " + x + " clicked y: " + y);
+  });
+  b = new Ball(400, 401, 20, "white");
+  canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    b.x = x;
+    b.y = y;
+  });
+  //canvas.addEventListener("mouseover", function (e) {
+  //  getCursorPosition(canvas, e);
+  //});
+
+  ctx.clearRect(0, 0, cnv.width, cnv.height);
+  setup();
+  return setInterval(() => {
+    render();
+  }, 1000 / fps);
 };
 
 export default ballgame;

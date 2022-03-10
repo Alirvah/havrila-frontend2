@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const style = {
@@ -18,6 +18,11 @@ export default function Canvas() {
       <Link to="/canvas/planets">
         <Button style={style} variant="contained" color="primary">
           Planets
+        </Button>
+      </Link>
+      <Link to="/canvas/cube">
+        <Button style={style} variant="contained" color="primary">
+          Cube
         </Button>
       </Link>
       <br />
