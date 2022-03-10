@@ -25,14 +25,16 @@ const Vector = class {
 
 const Ball = class {
   constructor(x, y, size, color, v) {
-    const G = 9;
+    const G = 1;
+    this.lossCoeficient = 0.7;
     this.x = x;
     this.y = y;
     this.size = size;
     this.m = size;
     this.color = color;
     this.v = v || new Vector();
-    this.a = new Vector(); //new Vector(0, G);
+    this.a = new Vector(0, G);
+    //this.a = new Vector();
   }
   draw(ctx) {
     ctx.fillStyle = this.color;
@@ -40,31 +42,34 @@ const Ball = class {
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, true);
     ctx.fill();
   }
-  update(cnv, otherballs) {
-    this.checkForCollisions(cnv, otherballs);
+  update(cnv, balls) {
+    this.checkForCollisions(cnv, balls);
     this.v.x += this.a.x;
     this.v.y += this.a.y;
+
     this.x += this.v.x;
     this.y += this.v.y;
   }
-  checkForCollisions(cnv, otherballs) {
-    if (this.x + this.size > cnv.width) {
+  checkForCollisions(cnv, balls) {
+    const xsubs = this.x - this.size;
+    const ysubs = this.y - this.size;
+    if (this.x + this.size > cnv.width || xsubs < 0) {
+      //moemntum loss
+      this.v.x = this.v.x - this.lossCoeficient * this.v.x;
+      this.v.y = this.v.y - this.lossCoeficient * this.v.y;
+
       this.v.x = -this.v.x;
-      this.x = cnv.width - this.size;
+      this.x = xsubs < 0 ? this.size : cnv.width - this.size;
     }
-    if (this.x - this.size < 0) {
-      this.v.x = -this.v.x;
-      this.x = this.size;
-    }
-    if (this.y + this.size > cnv.height) {
+    if (this.y + this.size > cnv.height || ysubs < 0) {
+      //moemntum loss
+      this.v.x = this.v.x - this.lossCoeficient * this.v.x;
+      this.v.y = this.v.y - this.lossCoeficient * this.v.y;
+
       this.v.y = -this.v.y;
-      this.y = cnv.height - this.size;
+      this.y = ysubs < 0 ? this.size : cnv.height - this.size;
     }
-    if (this.y - this.size < 0) {
-      this.v.y = -this.v.y;
-      this.y = this.size;
-    }
-    otherballs.forEach((other) => {
+    balls.forEach((other) => {
       if (this !== other) {
         const dx = other.x - this.x;
         const dy = other.y - this.y;
@@ -79,20 +84,24 @@ const Ball = class {
           other.x += cos * distCorrection;
           other.y += sin * distCorrection;
 
+          //lossMomentum
+          this.v.x = this.v.x - this.lossCoeficient * this.v.x;
+          this.v.y = this.v.y - this.lossCoeficient * this.v.y;
+
           // circle1 perpendicular velocities
-          let vx1 = this.v.x * cos + this.v.y * sin;
-          let vy1 = this.v.y * cos - this.v.x * sin;
+          let perpendicular_vx1 = this.v.x * cos + this.v.y * sin;
+          let perpendicular_vy1 = this.v.y * cos - this.v.x * sin;
 
           // circle2 perpendicular velocities
-          let vx2 = other.v.x * cos + other.v.y * sin;
-          let vy2 = other.v.y * cos - other.v.x * sin;
+          let perpendicular_vx2 = other.v.x * cos + other.v.y * sin;
+          let perpendicular_vy2 = other.v.y * cos - other.v.x * sin;
 
           // swapping the x velocity
           // and rotating back the adjusted perpendicular velocities
-          this.v.x = vx2 * cos - vy1 * sin;
-          this.v.y = vy1 * cos + vx2 * sin;
-          other.v.x = vx1 * cos - vy2 * sin;
-          other.v.y = vy2 * cos + vx1 * sin;
+          this.v.x = perpendicular_vx2 * cos - perpendicular_vy1 * sin;
+          this.v.y = perpendicular_vy1 * cos + perpendicular_vx2 * sin;
+          other.v.x = perpendicular_vx1 * cos - perpendicular_vy2 * sin;
+          other.v.y = perpendicular_vy2 * cos + perpendicular_vx1 * sin;
         }
       }
     });
@@ -125,7 +134,10 @@ const setup = () => {
         //Math.random() * 10 + 2,
         10,
         collors[Math.floor(Math.random() * collors.length)],
-        new Vector(Math.random() * 4 + 1, Math.random() * 6 + 1)
+        new Vector(
+          Math.random() * 4 + 1 * Math.round(Math.random()) * 2 - 1,
+          Math.random() * 4 + 1 * Math.round(Math.random()) * 2 - 1
+        )
       )
     );
   }
