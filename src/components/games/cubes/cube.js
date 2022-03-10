@@ -13,7 +13,7 @@ const setup = () => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    cube.push(new Cube(x, y, 0, 100));
+    cube.push(new Cube(x, y, 0, 50));
   });
 };
 
