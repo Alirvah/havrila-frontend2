@@ -112,6 +112,7 @@ function ResponsiveDrawer(props) {
             "Devices",
             "Admin",
             "Canvas",
+            "Year",
           ].map((text, index) => (
             <ListItem
               component={Link}
@@ -131,6 +132,7 @@ function ResponsiveDrawer(props) {
                 {index === 4 && <TapAndPlayIcon />}
                 {index === 5 && <TapAndPlayIcon />}
                 {index === 6 && <SportsEsports />}
+                {index === 7 && <SportsEsports />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

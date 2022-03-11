@@ -16,6 +16,7 @@ import Canvas from "./games/Canvas";
 import Balls from "./games/Balls";
 import Planets from "./games/Planets";
 import Cube from "./games/Cube";
+import Year from "./year/Year";
 
 export default function Notebooks() {
   return (
@@ -47,6 +48,9 @@ export default function Notebooks() {
         </Route>
         <Route path="/devices">
           <Wifi />
+        </Route>
+        <Route path="/year">
+          <Year />
         </Route>
         <Route path="/minecraft">
           <Minecraft />
