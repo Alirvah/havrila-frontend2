@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 export default function Year() {
-  useEffect(() => {}, []);
   return (
     <video style={{ maxWidth: "100%", maxHeight: "100%" }} controls>
       <source
