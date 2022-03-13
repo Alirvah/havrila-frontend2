@@ -13,6 +13,8 @@ let rays = [];
 let walls = [];
 
 const setup = () => {
+  walls = [];
+  rays = [];
   c = new Circle(100, 100, 5);
   c.addMouse("mousemove");
   for (let i = 0; i < 360; i = i + 6) {
