@@ -12,7 +12,7 @@ const Line = class {
     this.x1 += 1;
     this.y2 += 1;
   }
-  draw(ctx) {
+  draw(cnv, ctx) {
     ctx.beginPath();
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);

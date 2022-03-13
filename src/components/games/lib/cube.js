@@ -70,12 +70,12 @@ const Cube = class {
       v.z = z + this.z;
     }
   }
-  draw(ctx) {
+  draw(cnv, ctx) {
     let lines = [];
     for (let edge of this.edges) {
       lines.push(new Line(this.vertices[edge[0]], this.vertices[edge[1]]));
     }
-    lines.forEach((e) => e.draw(ctx));
+    lines.forEach((e) => e.draw(cnv, ctx));
   }
 };
 

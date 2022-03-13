@@ -19,7 +19,7 @@ const setup = () => {
 
 const render = () => {
   cube.forEach((e) => e.update(cnv));
-  cube.forEach((e) => e.draw(ctx));
+  cube.forEach((e) => e.draw(cnv, ctx));
 };
 
 const cube3d = (canvasName) => {
