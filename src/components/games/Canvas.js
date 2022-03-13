@@ -25,6 +25,11 @@ export default function Canvas() {
           Cube
         </Button>
       </Link>
+      <Link to="/canvas/ray">
+        <Button style={style} variant="contained" color="primary">
+          Ray
+        </Button>
+      </Link>
       <br />
     </>
   );

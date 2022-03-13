@@ -5,6 +5,9 @@ const Line = class {
     this.x2 = p2.x;
     this.y2 = p2.y;
   }
+  length() {
+    return Math.sqrt(this.x1 * this.x2 + this.y1 * this.y2);
+  }
   update(cnv) {
     this.x1 += 1;
     this.y2 += 1;

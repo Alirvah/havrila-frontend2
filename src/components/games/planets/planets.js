@@ -1,3 +1,5 @@
+import rotateAround from "../lib/rotateAround";
+
 let fps = 30;
 let cnv, ctx;
 
@@ -43,7 +45,7 @@ const Planet = class {
   }
   update(cnv) {
     if (!this.isStar) {
-      let rot = this.rotateAround(
+      let rot = rotateAround(
         cnv.width / 2,
         cnv.height / 2,
         this.x,
@@ -55,14 +57,6 @@ const Planet = class {
       this.orbit.push([this.x, this.y]);
       if (this.orbit.length > 400) this.orbit.shift();
     }
-  }
-  rotateAround(cx, cy, x, y, angle) {
-    var radians = (Math.PI / 180) * angle,
-      cos = Math.cos(radians),
-      sin = Math.sin(radians),
-      nx = cos * (x - cx) + sin * (y - cy) + cx,
-      ny = cos * (y - cy) - sin * (x - cx) + cy;
-    return [nx, ny];
   }
 };
 

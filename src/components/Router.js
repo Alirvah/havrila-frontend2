@@ -17,6 +17,7 @@ import Balls from "./games/Balls";
 import Planets from "./games/Planets";
 import Cube from "./games/Cube";
 import Year from "./year/Year";
+import Ray from "./games/Ray";
 
 export default function Notebooks() {
   return (
@@ -44,6 +45,9 @@ export default function Notebooks() {
           </Route>
           <Route path="/canvas/cube">
             <Cube />
+          </Route>
+          <Route path="/canvas/ray">
+            <Ray />
           </Route>
         </Route>
         <Route path="/devices">

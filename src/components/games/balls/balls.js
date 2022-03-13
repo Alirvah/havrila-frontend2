@@ -19,9 +19,9 @@ const collors = [
 
 const Ball = class {
   constructor(x, y, size, color, v) {
-    const G = 1;
+    //const G = 1;
     //this.lossCoeficient = 0.5;
-    this.lossCoeficient = 0.1;
+    this.lossCoeficient = 0.01;
     this.x = x;
     this.y = y;
     this.size = size;
@@ -30,6 +30,8 @@ const Ball = class {
     this.v = v || new Vector();
     //this.a = new Vector(0, G);
     this.a = new Vector();
+    this.mx = x;
+    this.my = y;
   }
   draw(ctx) {
     ctx.fillStyle = this.color;
@@ -81,20 +83,18 @@ const Ball = class {
           other.x += cos * distCorrection;
           other.y += sin * distCorrection;
 
-          //lossMomentum
           this.v.x = this.v.x - this.lossCoeficient * this.v.x;
           this.v.y = this.v.y - this.lossCoeficient * this.v.y;
 
-          // circle1 perpendicular velocities
           let perpendicular_vx1 = this.v.x * cos + this.v.y * sin;
           let perpendicular_vy1 = this.v.y * cos - this.v.x * sin;
 
-          // circle2 perpendicular velocities
           let perpendicular_vx2 = other.v.x * cos + other.v.y * sin;
           let perpendicular_vy2 = other.v.y * cos - other.v.x * sin;
 
           // swapping the x velocity
           // and rotating back the adjusted perpendicular velocities
+
           this.v.x = perpendicular_vx2 * cos - perpendicular_vy1 * sin;
           this.v.y = perpendicular_vy1 * cos + perpendicular_vx2 * sin;
           other.v.x = perpendicular_vx1 * cos - perpendicular_vy2 * sin;
@@ -157,10 +157,8 @@ const ballgame = (canvasName) => {
   b = new Ball(400, 401, 20, "white");
   canvas.addEventListener("mousemove", (e) => {
     const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    b.x = x;
-    b.y = y;
+    b.mx = e.clientX - rect.left;
+    b.my = e.clientY - rect.top;
   });
   //canvas.addEventListener("mouseover", function (e) {
   //  getCursorPosition(canvas, e);
@@ -169,6 +167,14 @@ const ballgame = (canvasName) => {
   ctx.clearRect(0, 0, cnv.width, cnv.height);
   setup();
   return setInterval(() => {
+    const circleToMouseCoeficient = 10;
+    const dx = b.mx - b.x;
+    const dy = b.my - b.y;
+    b.v.x += dx / circleToMouseCoeficient / 10;
+    b.v.y += dy / circleToMouseCoeficient / 10;
+
+    b.x += dx / circleToMouseCoeficient;
+    b.y += dy / circleToMouseCoeficient;
     render();
   }, 1000 / fps);
 };
