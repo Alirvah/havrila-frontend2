@@ -12,7 +12,7 @@ const Circle = class {
     this.s = s;
     this.v = new Vector();
     this.a = new Vector();
-    this.color = "white";
+    this.color = "red";
     this.onMouse = false;
     this.mx = x;
     this.my = y;
@@ -30,7 +30,7 @@ const Circle = class {
     if (this.onMouse) {
       const dx = this.mx - this.x;
       const dy = this.my - this.y;
-      const circleToMouseCoeficient = 1;
+      const circleToMouseCoeficient = 10;
       this.x += dx / circleToMouseCoeficient;
       this.y += dy / circleToMouseCoeficient;
     }

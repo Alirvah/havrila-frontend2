@@ -2,20 +2,11 @@ import Vector from "../lib/vector";
 
 let fps = 30;
 let cnv, ctx;
-let numberOfBalls = 50;
+let numberOfBalls = 10;
 let balls = [];
 let b;
 
-const collors = [
-  "yellow",
-  "blue",
-  "red",
-  "green",
-  "orange",
-  "brown",
-  "cyan",
-  "navy",
-];
+const collors = ["yellow", "blue", "red", "green", "orange"];
 
 const Ball = class {
   constructor(x, y, size, color, v) {
@@ -107,13 +98,11 @@ const Ball = class {
 
 const setup = () => {
   balls = [];
-  //balls.push(new Ball(400, 401, 10, "blue", new Vector(-6, 0)));
   for (let i = 0; i < numberOfBalls; i++) {
     balls.push(
       new Ball(
         Math.random() * cnv.width,
         Math.random() * cnv.height,
-        //Math.random() * 10 + 2,
         10,
         collors[Math.floor(Math.random() * collors.length)],
         new Vector(
@@ -129,6 +118,18 @@ const render = () => {
   ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
 
+  ctx.setLineDash([10, 10]);
+  ctx.beginPath();
+  ctx.moveTo(b.x, b.y);
+  ctx.lineTo(b.mx, b.my);
+  ctx.strokeStyle = "white";
+  ctx.stroke();
+
+  ctx.fillStyle = "red";
+  ctx.beginPath();
+  ctx.arc(b.mx, b.my, 2, 0, Math.PI * 2, true);
+  ctx.fill();
+
   balls.forEach((ball) => ball.update(cnv, balls));
   balls.forEach((ball) => ball.draw(ctx));
   b.update(cnv, balls);
@@ -141,12 +142,6 @@ const ballgame = (canvasName) => {
   cnv.width = Math.floor(window.innerWidth / 1.3);
   cnv.height = Math.floor(window.innerHeight / 1.3);
 
-  //function getCursorPosition(canvas, event) {
-  //  const rect = canvas.getBoundingClientRect();
-  //  const x = event.clientX - rect.left;
-  //  const y = event.clientY - rect.top;
-  //  console.log("x: " + x + " y: " + y);
-  //}
   const canvas = document.querySelector("canvas");
   canvas.addEventListener("mousedown", (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -160,9 +155,6 @@ const ballgame = (canvasName) => {
     b.mx = e.clientX - rect.left;
     b.my = e.clientY - rect.top;
   });
-  //canvas.addEventListener("mouseover", function (e) {
-  //  getCursorPosition(canvas, e);
-  //});
 
   ctx.clearRect(0, 0, cnv.width, cnv.height);
   setup();
@@ -170,11 +162,12 @@ const ballgame = (canvasName) => {
     const circleToMouseCoeficient = 10;
     const dx = b.mx - b.x;
     const dy = b.my - b.y;
-    b.v.x += dx / circleToMouseCoeficient / 10;
-    b.v.y += dy / circleToMouseCoeficient / 10;
+    b.v.x += dx / (circleToMouseCoeficient * 50);
+    b.v.y += dy / (circleToMouseCoeficient * 50);
 
-    b.x += dx / circleToMouseCoeficient;
-    b.y += dy / circleToMouseCoeficient;
+    b.x += b.v.x;
+    b.y += b.v.y;
+
     render();
   }, 1000 / fps);
 };
