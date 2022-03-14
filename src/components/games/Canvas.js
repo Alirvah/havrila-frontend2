@@ -30,6 +30,11 @@ export default function Canvas() {
           Ray
         </Button>
       </Link>
+      <Link to="/canvas/clock">
+        <Button style={style} variant="contained" color="primary">
+          Clock
+        </Button>
+      </Link>
       <br />
     </>
   );

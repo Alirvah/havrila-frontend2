@@ -1,9 +1,4 @@
-import Ray from "./ray";
-import Line from "./line";
-import Point from "./point";
-import rotateAround from "./rotateAround";
 import Vector from "./vector";
-import Wall from "./wall";
 
 const Circle = class {
   constructor(x, y, s) {

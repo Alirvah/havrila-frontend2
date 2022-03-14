@@ -1,6 +1,6 @@
 import Line from "../lib/line";
 import Point from "../lib/point";
-import Wall from "../lib/wall";
+import Wall from "./wall";
 import Ray from "../lib/ray";
 import Circle from "../lib/circle";
 
@@ -29,7 +29,7 @@ const setup = () => {
     const y2 = Math.random() * cnv.height + min;
     const p1 = new Point(x1, y1);
     const p2 = new Point(x2, y2);
-    walls.push(new Wall(new Line(p1, p2, 10)));
+    walls.push(new Wall(new Line(p1, p2, 3)));
   }
   walls.push(new Wall(new Line(new Point(0, 0), new Point(cnv.width, 0))));
   walls.push(new Wall(new Line(new Point(0, 0), new Point(0, cnv.height))));

@@ -7,7 +7,7 @@ let cube;
 
 const setup = () => {
   cube = [];
-  //cube = new Cube(400, 400, 0, 100);
+  cube.push(new Cube(cnv.width / 2, cnv.height / 2, 0, 50));
   const canvas = document.querySelector("canvas");
   canvas.addEventListener("mousedown", (e) => {
     const rect = canvas.getBoundingClientRect();
