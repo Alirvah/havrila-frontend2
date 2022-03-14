@@ -191,7 +191,8 @@ const Clock = class {
 };
 
 const setup = () => {
-  c = new Clock(cnv.width / 2, cnv.height / 2, 300);
+  const min = Math.min(cnv.width, cnv.height);
+  c = new Clock(cnv.width / 2, cnv.height / 2, min / 3);
 };
 const render = () => {
   c.update();
