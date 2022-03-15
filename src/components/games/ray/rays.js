@@ -8,7 +8,6 @@ let cnv, ctx;
 let fps = 30;
 
 let c;
-let r;
 let rays = [];
 let walls = [];
 
