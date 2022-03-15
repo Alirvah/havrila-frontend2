@@ -18,19 +18,19 @@ const Clock = class {
     this.smooth = false;
   }
   update() {
-    this.milis += 999 / 60;
-    if (this.milis % this.milis === 0) this.sec += 1;
-    const time = new Date(
-      2018,
-      11,
-      24,
-      this.hour,
-      this.min,
-      this.sec,
-      this.milis
-    );
+    //this.milis += 999 / 60;
+    //if (this.milis % this.milis === 0) this.sec += 1;
+    //const time = new Date(
+    //  2018,
+    //  11,
+    //  24,
+    //  this.hour,
+    //  this.min,
+    //  this.sec,
+    //  this.milis
+    //);
     //const time = new Date(2018, 11, 24, 11, 59, 59, 0);
-    //const time = new Date();
+    const time = new Date();
     this.milis = this.smooth ? time.getMilliseconds() : 0;
     this.sec = time.getSeconds();
     this.min = time.getMinutes();
