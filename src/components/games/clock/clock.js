@@ -89,23 +89,13 @@ const Clock = class {
       }
     }
 
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(this.x + 175, this.y - 26, 50, 50);
-    ctx.font = "bold 40px Arial";
-    ctx.fillStyle = "#000";
-    if (/^\d$/.test(this.day)) {
-      ctx.fillText(this.day, this.x + 190, this.y + 14);
-    } else {
-      ctx.fillText(this.day, this.x + 177, this.y + 14);
-    }
-
     ctx.lineCap = "round";
 
     rot = rotateAround(
       this.x,
       this.y,
       this.x,
-      this.y - this.s + 100,
+      this.y - this.s / 1.7,
       this.angle * this.hour * 5 + (5 * this.min * this.angle) / 60
     );
     ctx.beginPath();
@@ -114,11 +104,12 @@ const Clock = class {
     ctx.lineTo(rot[0], rot[1]);
     ctx.strokeStyle = "white";
     ctx.stroke();
+
     rot = rotateAround(
       this.x,
       this.y,
       this.x,
-      this.y - 20,
+      this.y - this.s / 15,
       this.angle * this.hour * 5 + (5 * this.min * this.angle) / 60 + 180
     );
     ctx.beginPath();
@@ -132,7 +123,7 @@ const Clock = class {
       this.x,
       this.y,
       this.x,
-      this.y - this.s + 20,
+      this.y - this.s / 1.1,
       this.angle * this.min + (this.sec * this.angle) / 60
     );
     ctx.beginPath();
@@ -146,7 +137,7 @@ const Clock = class {
       this.x,
       this.y,
       this.x,
-      this.y - 30,
+      this.y - this.s / 15,
       this.angle * this.min + (this.sec * this.angle) / 60 + 180
     );
     ctx.beginPath();
@@ -160,7 +151,7 @@ const Clock = class {
       this.x,
       this.y,
       this.x,
-      this.y - this.s + 20,
+      this.y - this.s / 1.1,
       this.angle * this.sec + (this.milis * this.angle) / 999
     );
     ctx.beginPath();
@@ -173,7 +164,7 @@ const Clock = class {
       this.x,
       this.y,
       this.x,
-      this.y - 40,
+      this.y - this.s / 7,
       this.angle * this.sec + (this.milis * this.angle) / 999 + 180
     );
     ctx.beginPath();
