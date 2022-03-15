@@ -41,7 +41,7 @@ const Clock = class {
       if (i % 30 == 0) {
         pointSize = 5;
       }
-      ctx.arc(rot[0], rot[1], pointSize, 0, Math.PI * 2, true);
+      ctx.arc(rot.x, rot.y, pointSize, 0, Math.PI * 2, true);
       ctx.fill();
       if (i == 0) {
         rot = rotateAround(
@@ -52,7 +52,7 @@ const Clock = class {
           i
         );
         ctx.font = "40px Arial";
-        ctx.fillText("12", rot[0], rot[1]);
+        ctx.fillText("12", rot.x, rot.y);
       }
       if (i == i * 90) {
         rot = rotateAround(
@@ -63,7 +63,7 @@ const Clock = class {
           i - 90
         );
         ctx.font = "40px Arial";
-        ctx.fillText("3", rot[0], rot[1]);
+        ctx.fillText("3", rot.x, rot.y);
       }
       if (i == i * 2 * 90) {
         rot = rotateAround(
@@ -74,7 +74,7 @@ const Clock = class {
           i - 2 * 90
         );
         ctx.font = "40px Arial";
-        ctx.fillText("6", rot[0], rot[1]);
+        ctx.fillText("6", rot.x, rot.y);
       }
       if (i == i * 270) {
         rot = rotateAround(
@@ -85,7 +85,7 @@ const Clock = class {
           i - 270
         );
         ctx.font = "40px Arial";
-        ctx.fillText("9", rot[0], rot[1]);
+        ctx.fillText("9", rot.x, rot.y);
       }
     }
 
@@ -101,7 +101,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 8;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "white";
     ctx.stroke();
 
@@ -115,7 +115,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 8;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "white";
     ctx.stroke();
 
@@ -129,7 +129,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 8;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "white";
     ctx.stroke();
 
@@ -143,7 +143,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 8;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "white";
     ctx.stroke();
 
@@ -157,7 +157,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "red";
     ctx.stroke();
     rot = rotateAround(
@@ -170,7 +170,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.lineWidth = 2;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot[0], rot[1]);
+    ctx.lineTo(rot.x, rot.y);
     ctx.strokeStyle = "red";
     ctx.stroke();
 

@@ -52,8 +52,8 @@ const Planet = class {
         this.y,
         (this.speed_constant * 10) / this.distance
       );
-      this.x = rot[0];
-      this.y = rot[1];
+      this.x = rot.x;
+      this.y = rot.y;
       this.orbit.push([this.x, this.y]);
       if (this.orbit.length > 400) this.orbit.shift();
     }

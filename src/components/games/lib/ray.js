@@ -32,8 +32,8 @@ const Ray = class {
     const y2 = wall.y2;
     const x3 = this.x;
     const y3 = this.y;
-    const x4 = this.rot[0];
-    const y4 = this.rot[1];
+    const x4 = this.rot.x;
+    const y4 = this.rot.y;
     const t_numerator = (x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4);
     const t_denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
     const t = t_numerator / t_denominator;
@@ -48,7 +48,7 @@ const Ray = class {
   }
   draw(cnv, ctx, xi, yi) {
     const p1 = new Point(this.x, this.y);
-    //const p2 = new Point(this.rot[0], this.rot[1]);
+    //const p2 = new Point(this.rot.x, this.rot.y);
     //const p2 = new Point(this.mx, this.my);
     const p2 = new Point(xi, yi);
     const l = new Line(p1, p2);
