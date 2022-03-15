@@ -5,7 +5,7 @@ let fps = 60;
 let c;
 
 const Clock = class {
-  constructor(x, y, s, stopWatch) {
+  constructor(x, y, s) {
     this.x = x;
     this.y = y;
     this.s = s;
@@ -16,8 +16,8 @@ const Clock = class {
     this.milis = 0;
     this.day = 0;
     this.smooth = false;
-    this.stopWatch = stopWatch || false;
   }
+
   update() {
     // time = new Date(2018, 11, 24, 11, 59, 59, 0);
     const time = new Date();
@@ -27,9 +27,9 @@ const Clock = class {
     this.hour = time.getHours() % 12 || 12;
     this.day = time.getDate();
   }
+
   hand(type, len, width, color, angle, over) {
     let handAngle;
-    ctx.lineCap = "round";
     if (type === "hour") {
       handAngle = this.smooth
         ? this.angle * this.hour * 5 +
@@ -47,13 +47,9 @@ const Clock = class {
       handAngle =
         this.angle * this.sec + (this.milis * this.angle) / 999 + angle;
     }
-    const rot = rotateAround(
-      this.x,
-      this.y,
-      this.x,
-      this.y - this.s / len,
-      handAngle
-    );
+    const roy = this.y - this.s / len;
+    const rot = rotateAround(this.x, this.y, this.x, roy, handAngle);
+    ctx.lineCap = "round";
     ctx.beginPath();
     ctx.lineWidth = this.s / width;
     ctx.moveTo(this.x, this.y);
@@ -65,6 +61,7 @@ const Clock = class {
   }
 
   draw() {
+    //border
     ctx.fillStyle = "white";
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.s + this.s / 9, 0, Math.PI * 2, true);
@@ -85,24 +82,23 @@ const Clock = class {
       ctx.fill();
 
       // numbers
-      for (let k = 1; k <= 24; k++) {
-        if (i === i * k * 30) {
-          const fontSize = k <= 12 ? this.s / 6 : this.s / 10;
-          const rot = rotateAround(
-            this.x,
-            this.y,
-            this.x,
-            k <= 12
-              ? this.y - this.s + fontSize / 1.1
-              : this.y - this.s + fontSize / 0.3,
-            i - k * 30
-          );
-          ctx.font = fontSize + "px Arial";
-          ctx.textBaseline = "middle";
-          ctx.textAlign = "center";
-          ctx.fillStyle = k <= 12 ? "white" : "#1b5e20";
-          ctx.fillText(k.toString(), rot.x, rot.y);
-        }
+      if (i % 30 === 0) {
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        const fontSize1 = this.s / 7;
+        const k = i / 30;
+        const roy1 = this.y - this.s + fontSize1 / 1.05;
+        const rot1 = rotateAround(this.x, this.y, this.x, roy1, i);
+        ctx.font = fontSize1 + "px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText((12 - k).toString(), rot1.x, rot1.y);
+
+        const fontSize2 = this.s / 10;
+        const roy2 = this.y - this.s + fontSize2 / 0.3;
+        const rot2 = rotateAround(this.x, this.y, this.x, roy2, i);
+        ctx.font = fontSize2 + "px Arial";
+        ctx.fillStyle = "#1b5e20";
+        ctx.fillText((24 - k).toString(), rot2.x, rot2.y);
       }
     }
 
