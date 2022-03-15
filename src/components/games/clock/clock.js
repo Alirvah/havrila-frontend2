@@ -2,6 +2,7 @@ import rotateAround from "../lib/rotateAround";
 
 let cnv, ctx;
 let fps = 60;
+let fpsCounter = 0;
 let c;
 
 const Clock = class {
@@ -15,11 +16,12 @@ const Clock = class {
     this.sec = 0;
     this.milis = 0;
     this.day = 0;
+    this.smooth = false;
   }
   update() {
     //const time = new Date(2018, 11, 24, 11, 0, 0, 0);
     const time = new Date();
-    this.milis = time.getMilliseconds();
+    this.milis = this.smooth ? time.getMilliseconds() : 0;
     this.sec = time.getSeconds();
     this.min = time.getMinutes();
     this.hour = time.getHours() % 12 || 12;
@@ -30,7 +32,7 @@ const Clock = class {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.s + 22, 0, Math.PI * 2, true);
     ctx.lineWidth = 13;
-    ctx.strokeStyle = "#003300";
+    ctx.strokeStyle = "#1b5e20";
     ctx.stroke();
 
     let rot;
@@ -184,9 +186,16 @@ const Clock = class {
 const setup = () => {
   const min = Math.min(cnv.width, cnv.height);
   c = new Clock(cnv.width / 2, cnv.height / 2, min / 3);
+  const canvas = document.querySelector("canvas");
+  canvas.addEventListener("mousedown", (e) => {
+    c.smooth = !c.smooth;
+  });
 };
 const render = () => {
+  //fpsCounter += 1;
+  //if (fpsCounter % 30 === 0) {
   c.update();
+  //}
   c.draw();
 };
 
