@@ -1,4 +1,4 @@
-import rotateAround from "../lib/rotateAround";
+import Point from "../lib/point";
 
 let cnv, ctx;
 let fps = 60;
@@ -8,6 +8,7 @@ const Clock = class {
   constructor(x, y, s) {
     this.x = x;
     this.y = y;
+    this.pos = new Point(x, y);
     this.s = s;
     this.angle = -6;
     this.hour = 0;
@@ -47,13 +48,13 @@ const Clock = class {
       handAngle =
         this.angle * this.sec + (this.milis * this.angle) / 999 + angle;
     }
-    const roy = this.y - this.s / len;
-    const rot = rotateAround(this.x, this.y, this.x, roy, handAngle);
+    const handEdge = new Point(this.x, this.y - this.s / len);
+    const handEdgeRotated = handEdge.rotate(this.pos, handAngle);
     ctx.lineCap = "round";
     ctx.beginPath();
     ctx.lineWidth = this.s / width;
     ctx.moveTo(this.x, this.y);
-    ctx.lineTo(rot.x, rot.y);
+    ctx.lineTo(handEdgeRotated.x, handEdgeRotated.y);
     ctx.strokeStyle = color;
     ctx.stroke();
 
@@ -71,7 +72,8 @@ const Clock = class {
 
     for (let i = 0; i < 360; i = i + 6) {
       //points
-      const rot = rotateAround(this.x, this.y, this.x, this.y - this.s, i);
+      const dot = new Point(this.x, this.y - this.s);
+      const rot = dot.rotate(this.pos, i);
       ctx.beginPath();
       let pointSize = this.s / 100;
       if (i % 30 === 0) {
@@ -87,15 +89,17 @@ const Clock = class {
         ctx.textAlign = "center";
         const fontSize1 = this.s / 7;
         const k = i / 30;
-        const roy1 = this.y - this.s + fontSize1 / 1.05;
-        const rot1 = rotateAround(this.x, this.y, this.x, roy1, i);
+        const doty1 = this.y - this.s + fontSize1 / 1.05;
+        const dot1 = new Point(this.x, doty1);
+        const rot1 = dot1.rotate(this.pos, i);
         ctx.font = fontSize1 + "px Arial";
         ctx.fillStyle = "white";
         ctx.fillText((12 - k).toString(), rot1.x, rot1.y);
 
         const fontSize2 = this.s / 10;
-        const roy2 = this.y - this.s + fontSize2 / 0.3;
-        const rot2 = rotateAround(this.x, this.y, this.x, roy2, i);
+        const doty2 = this.y - this.s + fontSize2 / 0.3;
+        const dot2 = new Point(this.x, doty2);
+        const rot2 = dot2.rotate(this.pos, i);
         ctx.font = fontSize2 + "px Arial";
         ctx.fillStyle = "#1b5e20";
         ctx.fillText((24 - k).toString(), rot2.x, rot2.y);
