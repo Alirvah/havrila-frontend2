@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
+import { CANVAS_ITEMS } from "../../../src/config/constants";
 
 const style = {
   marginRight: "1rem",
@@ -10,31 +11,13 @@ const style = {
 export default function Canvas() {
   return (
     <>
-      <Link to="/canvas/balls">
-        <Button style={style} variant="contained" color="primary">
-          Balls
-        </Button>
-      </Link>
-      <Link to="/canvas/planets">
-        <Button style={style} variant="contained" color="primary">
-          Planets
-        </Button>
-      </Link>
-      <Link to="/canvas/cube">
-        <Button style={style} variant="contained" color="primary">
-          Cube
-        </Button>
-      </Link>
-      <Link to="/canvas/ray">
-        <Button style={style} variant="contained" color="primary">
-          Ray
-        </Button>
-      </Link>
-      <Link to="/canvas/clock">
-        <Button style={style} variant="contained" color="primary">
-          Clock
-        </Button>
-      </Link>
+      {CANVAS_ITEMS.map((item) => (
+        <Link to={`/canvas/${item}`}>
+          <Button style={style} variant="contained" color="primary">
+            {item[0].toUpperCase() + item.substring(1)}
+          </Button>
+        </Link>
+      ))}
       <br />
     </>
   );

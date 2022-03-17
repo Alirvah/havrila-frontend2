@@ -19,6 +19,7 @@ import Cube from "./games/Cube";
 import Year from "./year/Year";
 import Ray from "./games/Ray";
 import Clock from "./games/Clock";
+import Stars from "./games/Stars";
 
 export default function Notebooks() {
   return (
@@ -52,6 +53,9 @@ export default function Notebooks() {
           </Route>
           <Route path="/canvas/clock">
             <Clock />
+          </Route>
+          <Route path="/canvas/stars">
+            <Stars />
           </Route>
         </Route>
         <Route path="/devices">

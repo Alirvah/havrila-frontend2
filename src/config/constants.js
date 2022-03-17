@@ -31,3 +31,12 @@ export const SENS_URL = HOST + "/sensors/api/v1";
 export const SYSTEM_URL_2 = HOST + "/system";
 
 export const SYSTEM_URL = HOST + "/api";
+
+export const CANVAS_ITEMS = [
+  "balls",
+  "planets",
+  "cube",
+  "ray",
+  "clock",
+  "stars",
+];
