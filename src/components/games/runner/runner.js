@@ -19,7 +19,7 @@ const Backround = class {
     this.height = h;
   }
   update() {
-    if (player.pos.x >= cnv.width / 3) {
+    if (player.pos.x >= cnv.width / 5) {
       this.pos.x -= SPEED / 2;
     }
     if (this.pos.x + this.width < 0) {
@@ -43,7 +43,7 @@ const Platform = class {
     this.height = h;
   }
   update() {
-    if (player.pos.x >= cnv.width / 3) {
+    if (player.pos.x >= cnv.width / 5) {
       this.pos.x -= SPEED;
     }
     if (this.pos.x + this.width < 0) {
@@ -86,7 +86,7 @@ const Player = class {
     player.vel.y += G;
     this.pos.y += this.vel.y;
 
-    if (this.pos.x < cnv.width / 3) {
+    if (this.pos.x < cnv.width / 4) {
       this.pos.x += this.vel.x;
     }
 
@@ -121,17 +121,17 @@ const Player = class {
 };
 
 const setup = () => {
-  player = new Player(300, 50, 50, 38);
+  player = new Player(50, 50, 50, 38);
   plattforms = [
     new Platform(0, cnv.height - 50, cnv.width / 2, 50),
     new Platform(cnv.width / 2 + 100, cnv.height - 50, cnv.width / 2, 50),
-    new Platform(200, 300, 300, 20),
-    new Platform(300, 500, 4000, 20),
+    new Platform(200, 158, 300, 20),
+    new Platform(100, cnv.height / 2 + 50, 4000, 20),
   ];
   backgrounds = [
     new Backround(500, cnv.height / 2, 300, cnv.height),
     new Backround(cnv.width / 2, 200, 200, cnv.height),
-    new Backround(800, 400, 400, cnv.height),
+    new Backround(800, 300, 400, cnv.height),
   ];
 };
 
