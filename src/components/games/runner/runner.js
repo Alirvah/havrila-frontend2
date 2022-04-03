@@ -124,9 +124,9 @@ const setup = () => {
   player = new Player(50, 50, 50, 38);
   plattforms = [
     new Platform(0, cnv.height - 50, cnv.width / 2, 50),
-    new Platform(cnv.width / 2 + 100, cnv.height - 50, cnv.width / 2, 50),
+    new Platform(cnv.width / 2 + 20, cnv.height - 50, cnv.width / 2, 50),
     new Platform(200, 158, 300, 20),
-    new Platform(100, cnv.height / 2 + 50, 4000, 20),
+    new Platform(100, cnv.height / 2 + 100, 4000, 20),
   ];
   backgrounds = [
     new Backround(500, cnv.height / 2, 300, cnv.height),
