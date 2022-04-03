@@ -39,4 +39,5 @@ export const CANVAS_ITEMS = [
   "ray",
   "clock",
   "stars",
+  "runner",
 ];

@@ -13,13 +13,8 @@ import Sensor from "./sensors/Sensor";
 import Todo from "./todo/Todo";
 import Wifi from "./wifi/Devices";
 import Canvas from "./games/Canvas";
-import Balls from "./games/Balls";
-import Planets from "./games/Planets";
-import Cube from "./games/Cube";
 import Year from "./year/Year";
-import Ray from "./games/Ray";
-import Clock from "./games/Clock";
-import Stars from "./games/Stars";
+import CanvasGame from "./games/CanvasGame";
 
 export default function Notebooks() {
   return (
@@ -40,22 +35,25 @@ export default function Notebooks() {
         <Route path="/canvas">
           <Canvas />
           <Route path="/canvas/balls">
-            <Balls />
+            <CanvasGame type="balls" />
           </Route>
           <Route path="/canvas/planets">
-            <Planets />
+            <CanvasGame type="planets" />
           </Route>
           <Route path="/canvas/cube">
-            <Cube />
+            <CanvasGame type="cube" />
           </Route>
           <Route path="/canvas/ray">
-            <Ray />
+            <CanvasGame type="ray" />
           </Route>
           <Route path="/canvas/clock">
-            <Clock />
+            <CanvasGame type="clock" />
           </Route>
           <Route path="/canvas/stars">
-            <Stars />
+            <CanvasGame type="stars" />
+          </Route>
+          <Route path="/canvas/runner">
+            <CanvasGame type="runner" />
           </Route>
         </Route>
         <Route path="/devices">
