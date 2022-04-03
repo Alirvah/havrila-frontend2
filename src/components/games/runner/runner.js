@@ -1,4 +1,3 @@
-import { brown } from "@material-ui/core/colors";
 import Point from "../lib/point";
 import pointInsideRectangle from "../lib/pointInsideRectangle";
 import Vector from "../lib/vector";
@@ -173,13 +172,11 @@ const loop = (canvasName) => {
 
   const canvas = document.querySelector("canvas");
   canvas.addEventListener("mousedown", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    //const rect = canvas.getBoundingClientRect();
+    //const x = e.clientX - rect.left;
+    //const y = e.clientY - rect.top;
     player.vel.y -= 10;
     player.action = "jumping";
-    //player.pos.x = x;
-    //player.pos.y = y;
   });
 
   setup();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import balls from "./balls/balls";
 import planets from "./planets/planets";
@@ -39,7 +39,7 @@ export default function CanvasGame({ type }) {
     return () => {
       clearInterval(game);
     };
-  }, []);
+  }, [type]);
 
   return <canvas id={type} />;
 }

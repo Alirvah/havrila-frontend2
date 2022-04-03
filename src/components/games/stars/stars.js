@@ -1,4 +1,3 @@
-import Point from "../lib/point";
 import Vector from "../lib/vector";
 
 let cnv, ctx;
