@@ -90,6 +90,11 @@ const Player = class {
       this.pos.x += this.vel.x;
     }
 
+    if (this.pos.y <= 0) {
+      this.pos.y = 0;
+      this.vel.y = 0;
+    }
+
     if (this.pos.y > cnv.height) {
       this.live = false;
     }
@@ -138,7 +143,11 @@ const setup = () => {
 const render = () => {
   plattforms.forEach((platform) => {
     if (player.collision(platform)) {
-      player.pos.y = platform.pos.y - player.height - 1;
+      if (platform.pos.y > player.pos.y) {
+        player.pos.y = platform.pos.y - player.height - 1;
+      } else {
+        player.pos.y += platform.height / 2;
+      }
       player.vel.y = 0;
       player.action = "running";
     }
