@@ -16,7 +16,7 @@ import Canvas from "./games/Canvas";
 import Year from "./year/Year";
 import CanvasGame from "./games/CanvasGame";
 
-export default function Notebooks() {
+export default function CustomRouter() {
   return (
     <>
       <Switch>

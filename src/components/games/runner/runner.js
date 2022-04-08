@@ -15,11 +15,11 @@ let megamanImg = new Image();
 let explosionImg = new Image();
 megamanImg.src =
   "https://zappa-havrila-net.s3.eu-central-1.amazonaws.com/7a89e9ff-59e8-404d-9228-be5b3eabf85f.png";
-
 explosionImg.src =
   "https://zappa-havrila-net.s3.eu-central-1.amazonaws.com/cde7bbb8-5909-461b-bed0-1579c889fa3a.png";
-
 let deltaTime = 0;
+let game = 1;
+let score = 0;
 
 const Star = class {
   constructor(x, y, s) {
@@ -222,21 +222,21 @@ const Player = class {
 const setup = () => {
   player = new Player(50, 50, 50, 38);
   plattforms = [
-    //  new Platform(0, cnv.height - 50, cnv.width / 2, 50),
-    //  new Platform(cnv.width / 2 + 20, cnv.height - 50, cnv.width / 2, 50),
-    //  new Platform(100, 158, 300, 20),
-    //  new Platform(100, cnv.height / 2 + 100, 4000, 20),
+    new Platform(0, cnv.height - 50, cnv.width / 2, 50),
+    new Platform(cnv.width / 2 + 20, cnv.height - 50, cnv.width / 2, 50),
+    //new Platform(100, 158, 300, 20),
+    new Platform(100, cnv.height / 2 + 100, 400, 20),
   ];
-  for (let i = 0; i < 2; i++) {
-    plattforms.push(
-      new Platform(
-        Math.random() * cnv.width,
-        Math.random() * (cnv.height / 2) + cnv.height / 2,
-        Math.random() * 1000 + 100,
-        20
-      )
-    );
-  }
+  //for (let i = 0; i < 2; i++) {
+  //  plattforms.push(
+  //    new Platform(
+  //      Math.random() * cnv.width,
+  //      Math.random() * (cnv.height / 2) + cnv.height / 2,
+  //      Math.random() * 1000 + 100,
+  //      20
+  //    )
+  //  );
+  //}
 
   backgrounds = [
     new Backround(500, cnv.height / 2, 300, cnv.height),
@@ -287,6 +287,7 @@ const render = () => {
 
   if (!player.live) {
     setup();
+    game = 2;
   }
 
   stars.forEach((p) => p.update());
@@ -300,6 +301,60 @@ const render = () => {
   plattforms.forEach((p) => p.draw());
   explosions.forEach((e) => e.draw());
   player.draw();
+
+  ctx.font = 12 + "px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("Score: " + score.toString(), 50, 12);
+  if (deltaTime % 10 === 0) {
+    score += 1;
+  }
+};
+
+const startingScreen = () => {
+  ctx.beginPath();
+  ctx.rect(0, 0, cnv.width, cnv.height);
+  ctx.strokeStyle = "black";
+  ctx.fillStyle = "black";
+  ctx.fill();
+  ctx.stroke();
+
+  stars.forEach((p) => p.draw());
+
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+
+  ctx.font = 48 + "px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("The Runner", cnv.width / 2, cnv.height / 2);
+
+  ctx.font = 18 + "px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("Click to continue", cnv.width / 2, cnv.height / 2 + 50);
+};
+
+const gameOverScren = () => {
+  stars.forEach((p) => p.draw());
+  backgrounds.forEach((p) => p.draw());
+
+  ctx.beginPath();
+  ctx.rect(0, 0, cnv.width, cnv.height);
+  ctx.strokeStyle = "black";
+  ctx.fillStyle = "black";
+  ctx.fill();
+  ctx.stroke();
+
+  stars.forEach((p) => p.draw());
+
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+
+  ctx.font = 48 + "px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("Game Over", cnv.width / 2, cnv.height / 2);
+
+  ctx.font = 30 + "px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText("Your Score was: " + score, cnv.width / 2, cnv.height / 2 + 50);
 };
 
 const loop = (canvasName) => {
@@ -319,14 +374,29 @@ const loop = (canvasName) => {
     }
     player.vel.y -= 10;
     player.action = "jumping";
+
+    score -= 1;
+
+    if (game === 2) {
+      game = 1;
+      score = 0;
+    } else {
+      game = 0;
+    }
   });
 
   setup();
   return setInterval(() => {
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, cnv.width, cnv.height);
-    render(cnv, ctx);
-    deltaTime += 1;
+    if (game === 0) {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, cnv.width, cnv.height);
+      render(cnv, ctx);
+      deltaTime += 1;
+    } else if (game === 1) {
+      startingScreen();
+    } else if (game === 2) {
+      gameOverScren();
+    }
   }, 1000 / fps);
 };
 
