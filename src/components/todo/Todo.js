@@ -1,26 +1,18 @@
 import { API, TODO_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
-import Checkbox from "@material-ui/core/Checkbox";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import TextField from "@material-ui/core/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import ListItemText from "@mui/material/ListItemText";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
+import { useDispatch } from "react-redux";
 
 export default function Todo() {
   const [currentTodo, setCurrentTodo] = useState("");
@@ -28,8 +20,6 @@ export default function Todo() {
   const [todos, setTodos] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const dispatch = useDispatch();
-
-  const classes = useStyles();
 
   useEffect(() => {
     axios.get(TODO_URL + API.TODO).then((r) => {
@@ -82,8 +72,8 @@ export default function Todo() {
   };
 
   return (
-    <>
-      <TextField
+    <div style={{ margin: "1rem" }}>
+      <input
         variant="standard"
         placeholder="Todo..."
         margin="normal"
@@ -98,7 +88,7 @@ export default function Todo() {
       {loading ? (
         <>loading...</>
       ) : (
-        <List className={classes.root}>
+        <List>
           {todos.map((e) => {
             const labelId = `checkbox-list-label-${e.id}`;
 
@@ -116,6 +106,7 @@ export default function Todo() {
                     checked={e.done}
                     tabIndex={-1}
                     disableRipple
+                    style={{ color: "white" }}
                     inputProps={{ "aria-labelledby": labelId }}
                   />
                 </ListItemIcon>
@@ -126,7 +117,7 @@ export default function Todo() {
                     edge="end"
                     aria-label="comments"
                   >
-                    <DeleteIcon />
+                    <DeleteIcon style={{ color: "white" }} />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
@@ -134,6 +125,6 @@ export default function Todo() {
           })}
         </List>
       )}
-    </>
+    </div>
   );
 }

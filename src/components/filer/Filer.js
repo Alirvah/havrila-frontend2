@@ -1,14 +1,14 @@
 import { API, FILE_URL } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
-import { Button } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import axios from "axios";
 
 export default function Filer() {
@@ -78,7 +78,7 @@ export default function Filer() {
   }
 
   return (
-    <>
+    <div style={{ padding: "1rem" }}>
       <Button variant="contained" component="label" color="primary">
         <input
           type="file"
@@ -92,12 +92,13 @@ export default function Filer() {
       <List>
         {files.length > 0 &&
           files.map((file) => (
-            <>
+            <div key={file.id}>
               <ListItem key={file.id}>
                 <ListItemIcon>
                   <IconButton
                     onClick={handleDelete(file.id)}
                     size="small"
+                    style={{ color: "white" }}
                     //variant="outlined"
                     //color="primary"
                   >
@@ -113,13 +114,14 @@ export default function Filer() {
                     : file.title
                 }`}
                     secondary={`${humanFileSize(file.size)}`}
+                    style={{ color: "white" }}
                   />
                 </a>
               </ListItem>
               <Divider />
-            </>
+            </div>
           ))}
       </List>
-    </>
+    </div>
   );
 }

@@ -4,38 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Notebook from "./Notebooks";
 import Notes from "./Notes";
-import Quill from "./Quill";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  noteBox: {
-    display: "flex",
-    justifyContent: "flex-start",
-  },
-  notes: {
-    marginRight: "1em",
-  },
-  noteBar: {
-    marginBottom: "1em",
-  },
-}));
+import QuillComponent from "./Quill";
 
 export default function Note() {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const refresh = useSelector((store) => store.refresh);
-  const active_notebook = useSelector((store) => store.active_notebook);
 
   useEffect(() => {
+    dispatch({ type: "LOADED", payload: false });
     axios.get(NOTE_URL + API.NOTEBOOK).then((r) => {
       if (r.data) {
         dispatch({ type: "SET_NOTEBOOKS", payload: r.data.reverse() });
-        dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });
         setLoading(false);
       }
     });
+    dispatch({ type: "LOADED", payload: true });
     // eslint-disable-next-line
   }, [refresh]);
 
@@ -45,17 +30,9 @@ export default function Note() {
 
   return (
     <>
-      <div className={classes.noteBar}>
-        <Notebook />
-      </div>
-      <div className={classes.noteBox}>
-        <div className={classes.notes}>
-          <Notes />
-        </div>
-        <div>
-          <Quill />
-        </div>
-      </div>
+      <Notebook />
+      <Notes />
+      <QuillComponent />
     </>
   );
 }

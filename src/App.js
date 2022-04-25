@@ -1,20 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import Drawer from "./components/Drawer";
 import Login from "./components/Login";
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Routes } from "react-router-dom";
 import weappJwt from "../src/helper/tokenDecode";
 import { Route } from "react-router-dom";
-import CanvasGame from "./components/games/CanvasGame";
-
-const styles = {
-  centerCanvas: {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "100px",
-  },
-};
+import Home from "./components/Home";
 
 function App() {
   const token = useSelector((state) => state.token) || null;
@@ -29,19 +20,17 @@ function App() {
   }
 
   return (
-    <Router>
+    <>
       {token ? (
-        <Drawer />
+        <Routes>
+          <Route path="*" element={<Home />} />
+        </Routes>
       ) : window.location.href.includes("/canvas/runner") ? (
-        <Route path="/canvas/runner">
-          <div style={styles.centerCanvas}>
-            <CanvasGame style={styles.centerCanvas} type="runner" />
-          </div>
-        </Route>
+        <div></div>
       ) : (
         <Login />
       )}
-    </Router>
+    </>
   );
 }
 

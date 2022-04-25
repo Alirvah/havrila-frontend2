@@ -1,10 +1,9 @@
 import { API, SENS_URL, SYSTEM_URL_2 } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
-import { Grid } from "@material-ui/core";
 import { Line, Bar } from "react-chartjs-2";
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import StopIcon from "@material-ui/icons/Stop";
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import StopIcon from "@mui/icons-material/Stop";
 import axios from "axios";
 
 const datasetOpts = (label, unit) => ({
@@ -50,14 +49,16 @@ const Sensor = () => {
     cpuTemp: {},
     uptime: {},
     wifiThroughput: {},
+    arrived: false,
   });
   const [dataSensor, setDataSensor] = useState({
     light: {},
     temperature: {},
     pressure: {},
     humidity: {},
+    arrived: false,
   });
-  const [dataFup, setDataFup] = useState({});
+  const [dataFup, setDataFup] = useState(false);
   const [stateRpi, setStateRpi] = useState(false);
   const [lastOnline, setLastOnline] = useState("");
 
@@ -73,6 +74,7 @@ const Sensor = () => {
         const ts = r.data.map((e) => new Date(e.ts * 1e3));
         setDataStatus({
           ...dataStatus,
+          arrived: true,
           cpuRamDisk: {
             labels: ts,
             datasets: [
@@ -136,6 +138,7 @@ const Sensor = () => {
         const ts = r.data.map((e) => new Date(e.ts * 1e3));
         setDataSensor({
           ...dataSensor,
+          arrived: true,
           light: {
             labels: ts,
             datasets: [
@@ -211,27 +214,25 @@ const Sensor = () => {
 
   return (
     <>
-      <p>
+      <div style={{ margin: "1rem" }}>
         <b>RaspberryPi</b>{" "}
         {stateRpi ? (
           <PlayCircleFilledIcon fontSize="small" style={{ color: "green" }} />
         ) : (
           <StopIcon fontSize="small" color="error" />
         )}
-      </p>
-      <p>
-        <b>Last Online:</b> {lastOnline && lastOnline.toLocaleString()}
-      </p>
-      <Grid container>
-        {dataStatus && (
+        <p>
+          <b>Last Online:</b> {lastOnline && lastOnline.toLocaleString()}
+        </p>
+      </div>
+      <>
+        {dataStatus.arrived && (
           <>
-            <Grid item lg={6}>
-              <Line
-                data={dataStatus.cpuRamDisk}
-                options={datasetOpts("CPU,RAM,Disk", "%")}
-              ></Line>
-            </Grid>
-            <Grid item lg={6}>
+            {/* <Line
+              data={dataStatus.cpuRamDisk}
+              options={datasetOpts("CPU,RAM,Disk", "%")}
+            ></Line>
+             <Grid item lg={6}>
               <Line
                 data={dataStatus.cpuTemp}
                 options={datasetOpts("CPU Temperature", "*C")}
@@ -248,18 +249,16 @@ const Sensor = () => {
                 data={dataStatus.wifiThroughput}
                 options={datasetOpts("Wifi Throughput", "GB")}
               ></Line>
-            </Grid>
+            </Grid> */}
           </>
         )}
 
-        {dataSensor && (
+        {dataSensor.arrived && (
           <>
-            <Grid item lg={6}>
-              <Line
-                data={dataSensor.light}
-                options={datasetOpts("Light", "Lux")}
-              ></Line>
-            </Grid>
+            {/* <Line
+              data={dataSensor.light}
+              options={datasetOpts("Light", "Lux")}
+            ></Line>
             <Grid item lg={6}>
               <Line
                 data={dataSensor.temperature}
@@ -277,13 +276,13 @@ const Sensor = () => {
                 data={dataSensor.humidity}
                 options={datasetOpts("Humidity", "%")}
               ></Line>
-            </Grid>
+            </Grid> */}
           </>
         )}
-        {dataFup && (
+        {false && (
           <Bar data={dataFup} options={datasetOpts("Internet", "GB")}></Bar>
         )}
-      </Grid>
+      </>
     </>
   );
 };

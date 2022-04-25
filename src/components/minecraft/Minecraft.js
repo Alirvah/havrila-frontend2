@@ -11,17 +11,17 @@ import {
   Select,
   StepIcon,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
-import StopIcon from "@material-ui/icons/Stop";
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import StopIcon from "@mui/icons-material/Stop";
 import axios from "axios";
-import { makeStyles } from "@material-ui/styles";
+
 import { useSelector } from "react-redux";
 import Donate from "../../helper/Donation";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = {
   parrent: {
     width: "100%",
   },
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     color: "green",
   },
   formControl: {
-    minWidth: 200,
+    minWidth: "200",
   },
   error: {
     color: "red",
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   backups: {
     margin: "1em",
   },
-}));
+};
 
 const Minecraft = () => {
   const [state, setState] = useState(null);
@@ -62,7 +62,7 @@ const Minecraft = () => {
   const [logs, setLogs] = useState([]);
   const groups = useSelector((store) => store.groups) || "";
 
-  const classes = useStyles();
+  const classes = useStyles;
 
   useEffect(() => {
     setError(null);
@@ -171,6 +171,7 @@ const Minecraft = () => {
             <PlayCircleFilledIcon
               fontSize="small"
               className={classes.runningCircle}
+              style={{ color: "#189c4f" }}
             />
           </>
         );
@@ -196,7 +197,7 @@ const Minecraft = () => {
   };
 
   return (
-    <>
+    <div style={{ margin: "1rem" }}>
       {!state || !instanceTypes ? (
         <p>loading...</p>
       ) : (
@@ -206,48 +207,39 @@ const Minecraft = () => {
           </Typography>
           {renderSwitch(state.status)}
           <Typography>IP Address: {state.ip}</Typography>
-          <div className={classes.buttons}>
-            <Button
-              className={classes.button}
-              type="text"
-              variant="contained"
-              color="primary"
-              disabled={state.status !== "stopped"}
+          <ul>
+            <li
+              style={{
+                display: `${state.status !== "stopped" ? "none" : "block"}`,
+              }}
               onClick={handleStart}
             >
               Start
-            </Button>
-            <Button
-              className={classes.button}
-              type="text"
-              variant="contained"
-              color="primary"
-              disabled={state.status !== "running"}
+            </li>
+            <li
+              style={{
+                display: `${state.status !== "running" ? "none" : "block"}`,
+              }}
               onClick={handleStop}
             >
               Stop
-            </Button>
-            <Button
-              className={classes.button}
-              type="text"
-              variant="contained"
-              color="primary"
-              disabled={state === "refresh"}
+            </li>
+            <li
+              style={{
+                display: `${state.status === "refresh" ? "none" : "block"}`,
+              }}
               onClick={() => setState("refresh")}
             >
               Refresh
-            </Button>
-            <Button
-              className={classes.button}
-              type="text"
-              variant="contained"
-              color="primary"
-              disabled={state === "refresh"}
+            </li>
+            <li
+              style={{
+                display: `${state.status === "refresh" ? "none" : "block"}`,
+              }}
               onClick={() => setOpen(true)}
             >
               {state.type}
-            </Button>
-            <Donate />
+            </li>
             {/*<Button
               className={classes.button}
               type="text"
@@ -258,7 +250,8 @@ const Minecraft = () => {
               Download World
             </Button>
             */}
-          </div>
+          </ul>
+          <Donate />
           {backups && (
             <div className={classes.backups}>
               <Typography>
@@ -286,13 +279,16 @@ const Minecraft = () => {
           {message && (
             <Typography className={classes.message}>{message}</Typography>
           )}
-          {logs.slice(0, 10).map((log) => (
-            <p>
-              <b>{log.created_at.split(".")[0].replace("T", " - ")}</b>: user{" "}
-              <u>{log.user}</u> {log.operation}{" "}
-              {!log.operation.includes("changed") && "minecraft server"}
-            </p>
-          ))}
+
+          <ul style={{ border: "1px solid #1e4976" }}>
+            {logs.slice(0, 10).map((log) => (
+              <li style={{ borderBottom: "1px solid #1e4976", cursor: "auto" }}>
+                <b>{log.created_at.split(".")[0].replace("T", " - ")}</b>: user{" "}
+                <u>{log.user}</u> {log.operation}{" "}
+                {!log.operation.includes("changed") && "minecraft server"}
+              </li>
+            ))}
+          </ul>
           <Dialog
             open={open}
             onClose={handleClose}
@@ -349,7 +345,7 @@ const Minecraft = () => {
           </Dialog>
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default Minecraft;

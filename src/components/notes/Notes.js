@@ -1,34 +1,20 @@
 import { API, NOTE_URL } from "../../config/constants";
 import { useDispatch, useSelector } from "react-redux";
 
-import React from "react";
-import Tab from "@material-ui/core/Tab";
-import Tabs from "@material-ui/core/Tabs";
-import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: "flex",
-    height: 500,
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-  },
-  button: {
-    textTransform: "none",
-  },
-}));
+import React from "react";
+import axios from "axios";
 
 const Notes = () => {
-  const notes = useSelector((store) => store.notes);
-  const active_note = useSelector((store) => store.active_note);
-  const notebooks = useSelector((store) => store.notebooks);
-  const active_notebook = useSelector((store) => store.active_notebook);
+  const notes = useSelector((store) => store.note.notes);
+  const active_note = useSelector((store) => store.note.active_note);
+  const show_notes = useSelector((store) => store.note.show_notes);
+  const show_notebooks = useSelector((store) => store.note.show_notebooks);
+  const loaded = useSelector((store) => store.note.loaded);
+  const notebooks = useSelector((store) => store.note.notebooks);
+  const active_notebook = useSelector((store) => store.note.active_notebook);
 
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   const newNote = () => {
@@ -43,52 +29,62 @@ const Notes = () => {
             NOTE_URL + API.NOTEBOOK + notebooks[active_notebook].id + "/",
         })
         .then((e) => {
-          dispatch({ type: "ACTIVE_NOTE", payload: 0 });
+          dispatch({ type: "ACTIVE_NOTEBOOK", payload: active_notebook });
           dispatch({ type: "SET_REFRESH" });
+          dispatch({ type: "SHOW_QUILL", payload: false });
         });
     }
   };
 
-  const handleChange = (event, newValue) => {
-    if (notes.length > newValue) {
-      dispatch({ type: "ACTIVE_NOTE", payload: newValue });
-      dispatch({ type: "SET_QUILL", payload: notes[newValue].content });
-    } else {
-      newNote();
-    }
+  const handleChange = (newValue) => {
+    dispatch({ type: "ACTIVE_NOTE", payload: newValue });
+    dispatch({ type: "SET_QUILL", payload: notes[newValue].content });
+    dispatch({ type: "SHOW_QUILL", payload: true });
+    dispatch({ type: "SHOW_NOTES", payload: false });
   };
 
   if (!notes) return <div>Loading...</div>;
 
   return (
-    <div className={classes.root}>
-      <Tabs
-        indicatorColor="primary"
-        orientation="vertical"
-        variant="scrollable"
-        value={active_note}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        {notes &&
-          notes.map((e) => (
-            <Tab
-              key={e.id}
-              className={classes.button}
-              label={e.title}
-              //{...a11yProps(e.id)}
-            />
-          ))}
-        {notebooks.length > 0 && (
-          <Tab
-            className={classes.button}
-            label="+"
-            // {...a11yProps(999)}
-          />
-        )}
-      </Tabs>
-    </div>
+    <ul>
+      {!show_notes & !show_notebooks ? (
+        <li
+          style={{ display: "flex", justifyContent: "space-between" }}
+          onClick={() => {
+            dispatch({ type: "SHOW_NOTES", payload: true });
+            dispatch({ type: "SHOW_QUILL", payload: false });
+          }}
+        >
+          <b>Note:</b> {notes[active_note]?.title}
+        </li>
+      ) : (
+        <>
+          {loaded & show_notes ? (
+            <>
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() => newNote()}
+              >
+                <AddCircleIcon />
+                <span>Note</span>
+              </li>
+              {notes &&
+                notes.map((e, i) => (
+                  <li key={i} onClick={() => handleChange(i)}>
+                    {e.title}
+                  </li>
+                ))}
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      )}
+    </ul>
   );
 };
 

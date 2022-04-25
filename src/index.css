@@ -5,6 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #001e3c;
+  color: white !important;
+}
+
+.icons {
+  color: white;
+}
+
+.ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: #fff;
+}
+
+.ql-toolbar .ql-fill {
+  fill: #fff;
+  stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+  color: #fff;
 }
 
 code {
@@ -12,11 +32,77 @@ code {
     monospace;
 }
 
+canvas {
+  width: 100%;
+}
+
 a {
   text-decoration: none;
   color: inherit;
 }
 
-.mat-row:hover {
-  background-color: #cbcbcb;
+li {
+  cursor: pointer;
+  margin: 0;
+  padding: 1rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+li:active {
+  background-color: #004c99;
+}
+
+li:hover {
+  background-color: #004c99;
+}
+
+.home-root {
+  display: flex;
+  justify-content: left;
+}
+
+.nav-bar {
+  list-style: none;
+  border: 1px solid #1e4976;
+  border-radius: 5px;
+  margin: 0px;
+  margin-left: 10px;
+  align-items: center;
+}
+
+.nav-button {
+  cursor: pointer;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border: 1px solid #1e4976;
+  border-radius: 5px;
+}
+.nav-button:hover {
+  background-color: #004c99;
+}
+.nav-button:active {
+  background-color: #004c99;
+}
+
+.header {
+  background-color: #071a2e;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+.content {
+  border: 1px solid #1e4976;
+  border-radius: 5px;
+  width: 100%;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }

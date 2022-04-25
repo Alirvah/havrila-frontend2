@@ -1,20 +1,20 @@
-import "react-quill/dist/quill.snow.css";
-
 import { API, NOTE_URL } from "../../config/constants";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import ReactQuill from "react-quill";
+import Button from "@mui/material/Button";
 import axios from "axios";
 
-const Quill = () => {
-  const text = useSelector((store) => store.quill);
-  const notes = useSelector((store) => store.notes);
-  const active_note = useSelector((store) => store.active_note);
-  const notebooks = useSelector((store) => store.notebooks);
-  const active_notebook = useSelector((store) => store.active_notebook);
+import ReactQuill from "react-quill";
+
+const QuillComponent = () => {
+  const text = useSelector((store) => store.note.quill);
+  const notes = useSelector((store) => store.note.notes);
+  const active_note = useSelector((store) => store.note.active_note);
+  const show_quill = useSelector((store) => store.note.show_quill);
+  const show_notebooks = useSelector((store) => store.note.show_notebooks);
+  const notebooks = useSelector((store) => store.note.notebooks);
+  const active_notebook = useSelector((store) => store.note.active_notebook);
 
   const dispatch = useDispatch();
 
@@ -68,6 +68,8 @@ const Quill = () => {
           .delete(NOTE_URL + API.NOTES + notes[active_note].id + "/")
           .then((e) => {
             dispatch({ type: "SET_QUILL", payload: "" });
+            dispatch({ type: "SHOW_QUILL", payload: false });
+            dispatch({ type: "SHOW_NOTES", payload: true });
             dispatch({ type: "SET_REFRESH" });
           })
           .catch((e) => alert("Note was not saved!!! \n" + e));
@@ -79,7 +81,8 @@ const Quill = () => {
       axios
         .delete(NOTE_URL + API.NOTEBOOK + notebooks[active_notebook].id + "/")
         .then((e) => {
-          dispatch({ type: "ACTIVE_NOTEBOOK", payload: 0 });
+          dispatch({ type: "SHOW_NOTES", payload: false });
+          dispatch({ type: "SHOW_NOTEBOOKS", payload: true });
           dispatch({ type: "SET_REFRESH" });
         })
         .catch((e) => alert("Note was not saved!!! \n" + e));
@@ -90,67 +93,79 @@ const Quill = () => {
 
   if (notebooks.length === 0) return <div></div>;
 
-  if (notes.length <= 0 && notebooks.length !== 0)
-    return (
-      <Button
-        type="text"
-        variant="outlined"
-        color="secondary"
-        disableElevation
-        onClick={handleDelete}
-      >
-        delete
-      </Button>
-    );
-
   return (
-    <Grid container>
-      <Grid item xs={6}>
-        <Button
-          type="text"
-          variant="contained"
-          color={state.readonly ? "default" : "primary"}
-          disableElevation
-          onClick={handleSave}
-          disabled={state.readonly}
-        >
-          save
-        </Button>
-      </Grid>
-      <Grid item xs={6}>
-        <Button
-          type="text"
-          variant="outlined"
-          color="secondary"
-          disableElevation
-          onClick={handleDelete}
-        >
-          delete
-        </Button>
-      </Grid>
-      <Grid item xs={12}>
-        <br />
-      </Grid>
-      <Grid item xs={12}>
-        <div
-          className="text-editor"
-          //style={{ position: "relative" }}
-          onDoubleClick={(e) => {
-            setState({ ...state, readonly: false });
-          }}
-        >
-          <ReactQuill
-            value={text}
-            onChange={handleChange}
-            modules={modules}
-            placeholder="Compose an epic..."
-            theme="snow"
-            readOnly={state.readonly}
-          />
+    <div>
+      {show_quill ? (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <Button
+              type="text"
+              variant="contained"
+              //color={state.readonly ? "default" : "primary"}
+              disableElevation
+              onClick={handleSave}
+              disabled={state.readonly}
+              style={{ color: "white" }}
+            >
+              save
+            </Button>
+            <Button
+              type="text"
+              variant="outlined"
+              //color="secondary"
+              disableElevation
+              onClick={handleDelete}
+            >
+              delete
+            </Button>
+          </div>
+          <div
+            className="text-editor"
+            //style={{ position: "relative" }}
+            onDoubleClick={(e) => {
+              setState({ ...state, readonly: false });
+            }}
+          >
+            <ReactQuill
+              value={text}
+              onChange={handleChange}
+              modules={modules}
+              placeholder="Compose an epic..."
+              theme="snow"
+              readOnly={state.readonly}
+              style={{
+                margin: "1rem",
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <div style={{ display: "flex" }}>
+          {notes.length <= 0 &&
+            notebooks.length !== 0 &&
+            !show_quill &&
+            !show_notebooks && (
+              <Button
+                type="text"
+                variant="outlined"
+                disableElevation
+                onClick={handleDelete}
+                style={{ color: "red", margin: "1rem", width: "100%" }}
+              >
+                delete notebok
+              </Button>
+            )}
         </div>
-      </Grid>
-    </Grid>
+      )}
+    </div>
   );
 };
 
-export default Quill;
+export default QuillComponent;

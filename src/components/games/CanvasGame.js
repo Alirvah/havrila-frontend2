@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import { Link } from "react-router-dom";
 import balls from "./balls/balls";
 import planets from "./planets/planets";
 import cube from "./cube/cube";
@@ -41,5 +42,14 @@ export default function CanvasGame({ type }) {
     };
   }, [type]);
 
-  return <canvas id={type} />;
+  return (
+    <>
+      <ul>
+        <li style={{ textAlign: "center", backgroundColor: "#002d5b" }}>
+          <Link to="/canvas">Back</Link>
+        </li>
+      </ul>
+      <canvas id={type} />
+    </>
+  );
 }

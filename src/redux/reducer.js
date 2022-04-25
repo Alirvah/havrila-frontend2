@@ -2,14 +2,21 @@ const initialState = {
   token: "",
   user: "",
   groups: [],
-  active_note: 0,
-  active_notebook: 0,
-  notes: [],
-  notebooks: [],
-  quill: "",
+  note: {
+    active_note: 0,
+    active_notebook: 0,
+    show_notes: false,
+    show_notebooks: false,
+    show_quill: false,
+    notes: [],
+    notebooks: [],
+    quill: "",
+    loaded: true,
+  },
   route: "/",
   refresh: true,
   numberOfTodos: 0,
+  navbar: true,
 };
 
 const loadState = () => {
@@ -41,16 +48,80 @@ const reduxState = (state = loadState(), action) => {
     case "SAVEUSER":
       saveState({ ...state, user: action.payload });
       return { ...state, user: action.payload };
+    case "LOADED":
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          loaded: action.payload,
+        },
+      };
+    case "SHOW_QUILL":
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          show_quill: action.payload,
+        },
+      };
+    case "SHOW_NOTES":
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          show_notes: action.payload,
+        },
+      };
+    case "SHOW_NOTEBOOKS":
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          show_notebooks: action.payload,
+        },
+      };
     case "ACTIVE_NOTEBOOK":
-      return { ...state, active_notebook: action.payload };
+      //const note = { ...state.note, active_notebook: action.payload };
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          active_notebook: action.payload,
+        },
+      };
     case "ACTIVE_NOTE":
-      return { ...state, active_note: action.payload };
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          active_note: action.payload,
+        },
+      };
     case "SET_NOTEBOOKS":
-      return { ...state, notebooks: action.payload };
+      //const note = { ...state.note, active_notebook: action.payload };
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          notebooks: action.payload,
+        },
+      };
     case "SET_NOTES":
-      return { ...state, notes: action.payload };
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          notes: action.payload,
+        },
+      };
     case "SET_QUILL":
-      return { ...state, quill: action.payload };
+      return {
+        ...state,
+        note: {
+          ...state.note,
+          quill: action.payload,
+        },
+      };
     case "SET_ROUTE":
       return { ...state, route: action.payload };
     case "SET_REFRESH":
@@ -61,6 +132,8 @@ const reduxState = (state = loadState(), action) => {
       return { ...state, numberOfTodos: action.payload };
     case "SET_USER_GROUPS":
       return { ...state, groups: action.payload };
+    case "NAVBAR":
+      return { ...state, navbar: action.payload };
     default:
       return state;
   }
