@@ -62,25 +62,34 @@ export default function Home() {
         {navbar && (
           <nav>
             <ul className="nav-bar">
-              {groups.includes("admin") &&
-                [
-                  "Notes",
-                  "Todo",
-                  "Filer",
-                  "Sensors",
-                  "Devices",
-                  "Admin",
-                  "Canvas",
-                  "Year",
-                ].map((text, index) => (
+              {groups.includes("notes") &&
+                ["Notes"].map((text, index) => (
                   <li key={index} onClick={hideNavbar}>
                     <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
                       {text}
                     </Link>
                   </li>
                 ))}
+              {groups.includes("todo") &&
+                ["Todo"].map((text, index) => (
+                  <li key={index} onClick={hideNavbar}>
+                    <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              {groups.includes("admin") &&
+                ["Filer", "Sensors", "Devices", "Admin", "Canvas", "Year"].map(
+                  (text, index) => (
+                    <li key={index} onClick={hideNavbar}>
+                      <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                        {text}
+                      </Link>
+                    </li>
+                  )
+                )}
               {groups.includes("minecraft") &&
-                ["minecraft"].map((text, index) => (
+                ["Minecraft"].map((text, index) => (
                   <li key={index} onClick={hideNavbar}>
                     <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
                       {text}
@@ -88,7 +97,7 @@ export default function Home() {
                   </li>
                 ))}
               {groups.includes("valheim") &&
-                ["valheim"].map((text, index) => (
+                ["Valheim"].map((text, index) => (
                   <li key={index} onClick={hideNavbar}>
                     <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
                       {text}
@@ -102,8 +111,6 @@ export default function Home() {
           <Routes>
             {groups.includes("admin") && (
               <>
-                <Route path="notes" element={<Note />} />
-                <Route path="todo" element={<Todo />} />
                 <Route path="filer" element={<Filer />} />
                 <Route path="sensors" element={<Sensor />} />
                 <Route path="canvas" element={<Canvas />} />
@@ -120,11 +127,17 @@ export default function Home() {
                 <Route path="valheim" element={<Valheim />} />
               </>
             )}
-            {groups.includes("minecraft") && (
-              <Route path="minecraft" element={<Minecraft />} />
+            {groups.includes("notes") && (
+              <Route path="notes" element={<Note />} />
+            )}
+            {groups.includes("todo") && (
+              <Route path="todo" element={<Todo />} />
             )}
             {groups.includes("valheim") && (
               <Route path="valheim" element={<Valheim />} />
+            )}
+            {groups.includes("minecraft") && (
+              <Route path="minecraft" element={<Valheim />} />
             )}
           </Routes>
         </div>
