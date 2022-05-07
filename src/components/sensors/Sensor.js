@@ -1,7 +1,7 @@
 import { API, SENS_URL, SYSTEM_URL_2 } from "../../config/constants";
 import React, { useEffect, useState } from "react";
 
-import { Line, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import StopIcon from "@mui/icons-material/Stop";
 import axios from "axios";
@@ -211,6 +211,10 @@ const Sensor = () => {
     });
     // eslint-disable-next-line
   }, []);
+
+  if (!lastOnline) {
+    return <p style={{ paddingLeft: "1rem" }}>loading...</p>;
+  }
 
   return (
     <>
