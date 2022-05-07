@@ -45,9 +45,11 @@ export default function CanvasGame({ type }) {
   return (
     <>
       <ul>
-        <li style={{ textAlign: "center", backgroundColor: "#002d5b" }}>
-          <Link to="/canvas">Back</Link>
-        </li>
+        <Link to="/canvas">
+          <li style={{ textAlign: "center", backgroundColor: "#002d5b" }}>
+            Back
+          </li>
+        </Link>
       </ul>
       <canvas id={type} />
     </>

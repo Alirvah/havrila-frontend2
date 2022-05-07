@@ -17,6 +17,7 @@ export const API = {
   ONLINE: "/online/latest",
   SERVER: "/server/",
   FUP: "/fup/",
+  MEETING: "/meeting/",
 };
 
 export const HOST =

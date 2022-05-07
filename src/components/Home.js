@@ -13,6 +13,9 @@ import Minecraft from "./minecraft/Minecraft";
 import Valheim from "./valheim/Valheim";
 import { API, SYSTEM_URL, TODO_URL } from "../config/constants";
 import MenuIcon from "@mui/icons-material/Menu";
+import Admin from "./admin/Admin";
+import Meetings from "./meetings/Meetings";
+import Landing from "./landing/Landing";
 
 export default function Home() {
   const groups = useSelector((store) => store.groups) || "";
@@ -64,83 +67,99 @@ export default function Home() {
             <ul className="nav-bar">
               {groups.includes("notes") &&
                 ["Notes"].map((text, index) => (
-                  <li key={index} onClick={hideNavbar}>
-                    <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                    <li key={index} onClick={hideNavbar}>
                       {text}
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 ))}
               {groups.includes("todo") &&
                 ["Todo"].map((text, index) => (
-                  <li key={index} onClick={hideNavbar}>
-                    <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                    <li key={index} onClick={hideNavbar}>
                       {text}
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 ))}
               {groups.includes("admin") &&
-                ["Filer", "Sensors", "Devices", "Admin", "Canvas", "Year"].map(
-                  (text, index) => (
+                [
+                  "Filer",
+                  "Sensors",
+                  "Devices",
+                  "Admin",
+                  "Canvas",
+                  "Year",
+                  "Meetings",
+                ].map((text, index) => (
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
                     <li key={index} onClick={hideNavbar}>
-                      <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
-                        {text}
-                      </Link>
+                      {text}
                     </li>
-                  )
-                )}
+                  </Link>
+                ))}
               {groups.includes("minecraft") &&
                 ["Minecraft"].map((text, index) => (
-                  <li key={index} onClick={hideNavbar}>
-                    <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                    <li key={index} onClick={hideNavbar}>
                       {text}
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 ))}
               {groups.includes("valheim") &&
                 ["Valheim"].map((text, index) => (
-                  <li key={index} onClick={hideNavbar}>
-                    <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                    <li key={index} onClick={hideNavbar}>
                       {text}
-                    </Link>
-                  </li>
+                    </li>
+                  </Link>
                 ))}
             </ul>
           </nav>
         )}
-        <div className="content">
-          <Routes>
-            {groups.includes("admin") && (
-              <>
-                <Route path="filer" element={<Filer />} />
-                <Route path="sensors" element={<Sensor />} />
-                <Route path="canvas" element={<Canvas />} />
-                <Route path="balls" element={<CanvasGame type="balls" />} />
-                <Route path="planets" element={<CanvasGame type="planets" />} />
-                <Route path="balls" element={<CanvasGame type="balls" />} />
-                <Route path="cube" element={<CanvasGame type="cube" />} />
-                <Route path="ray" element={<CanvasGame type="ray" />} />
-                <Route path="clock" element={<CanvasGame type="clock" />} />
-                <Route path="stars" element={<CanvasGame type="stars" />} />
-                <Route path="runner" element={<CanvasGame type="runner" />} />
-                <Route path="year" element={<Year />} />
-                <Route path="minecraft" element={<Minecraft />} />
+        {!groups.length ? (
+          <p>loading...</p>
+        ) : (
+          <div className="content">
+            <Routes>
+              {groups.includes("admin") && (
+                <>
+                  <Route path="/" element={<Landing />} />
+                  <Route path="filer" element={<Filer />} />
+                  <Route path="sensors" element={<Sensor />} />
+                  <Route path="canvas" element={<Canvas />} />
+                  <Route path="balls" element={<CanvasGame type="balls" />} />
+                  <Route
+                    path="planets"
+                    element={<CanvasGame type="planets" />}
+                  />
+                  <Route path="balls" element={<CanvasGame type="balls" />} />
+                  <Route path="cube" element={<CanvasGame type="cube" />} />
+                  <Route path="ray" element={<CanvasGame type="ray" />} />
+                  <Route path="clock" element={<CanvasGame type="clock" />} />
+                  <Route path="stars" element={<CanvasGame type="stars" />} />
+                  <Route path="runner" element={<CanvasGame type="runner" />} />
+                  <Route path="year" element={<Year />} />
+                  <Route path="minecraft" element={<Minecraft />} />
+                  <Route path="valheim" element={<Valheim />} />
+                  <Route path="admin" element={<Admin />} />
+                  <Route path="meetings" element={<Meetings />} />
+                </>
+              )}
+              {groups.includes("notes") && (
+                <Route path="notes" element={<Note />} />
+              )}
+              {groups.includes("todo") && (
+                <Route path="todo" element={<Todo />} />
+              )}
+              {groups.includes("valheim") && (
                 <Route path="valheim" element={<Valheim />} />
-              </>
-            )}
-            {groups.includes("notes") && (
-              <Route path="notes" element={<Note />} />
-            )}
-            {groups.includes("todo") && (
-              <Route path="todo" element={<Todo />} />
-            )}
-            {groups.includes("valheim") && (
-              <Route path="valheim" element={<Valheim />} />
-            )}
-            {groups.includes("minecraft") && (
-              <Route path="minecraft" element={<Valheim />} />
-            )}
-          </Routes>
-        </div>
+              )}
+              {groups.includes("minecraft") && (
+                <Route path="minecraft" element={<Valheim />} />
+              )}
+            </Routes>
+          </div>
+        )}
       </div>
     </>
   );
