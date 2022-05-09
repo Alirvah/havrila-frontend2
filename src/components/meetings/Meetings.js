@@ -11,7 +11,7 @@ const Meetings = () => {
         if (r.data) {
           const filteredData = r.data.filter((e) => {
             const date = new Date();
-            const day = ("0" + (date.getDay() + 1)).slice(-2);
+            const day = ("0" + date.getDate()).slice(-2);
             const month = ("0" + (date.getMonth() + 1)).slice(-2);
             const year = date.getFullYear();
             const today = `${day}-${month}-${year}`;
