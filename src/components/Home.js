@@ -1,21 +1,23 @@
+import { API, SYSTEM_URL, TODO_URL } from "../config/constants";
+import { Link, Route, Routes } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Route, Routes } from "react-router-dom";
-import Filer from "./filer/Filer";
+
+import Admin from "./admin/Admin";
 import Canvas from "./games/Canvas";
 import CanvasGame from "./games/CanvasGame";
+import Filer from "./filer/Filer";
+import Landing from "./landing/Landing";
+import Meetings from "./meetings/Meetings";
+import MenuIcon from "@mui/icons-material/Menu";
+import Minecraft from "./minecraft/Minecraft";
 import Note from "./notes/NoteIndex";
 import Sensor from "./sensors/Sensor";
 import Todo from "./todo/Todo";
+import Valheim from "./valheim/Valheim";
+import Workadventure from "./workadventure/Workadventure";
 import Year from "./year/Year";
 import axios from "axios";
-import Minecraft from "./minecraft/Minecraft";
-import Valheim from "./valheim/Valheim";
-import { API, SYSTEM_URL, TODO_URL } from "../config/constants";
-import MenuIcon from "@mui/icons-material/Menu";
-import Admin from "./admin/Admin";
-import Meetings from "./meetings/Meetings";
-import Landing from "./landing/Landing";
 
 export default function Home() {
   const groups = useSelector((store) => store.groups) || "";
@@ -113,6 +115,14 @@ export default function Home() {
                     </li>
                   </Link>
                 ))}
+              {groups.includes("workadventure") &&
+                ["Workadventure"].map((text, index) => (
+                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
+                    <li key={index} onClick={hideNavbar}>
+                      {text}
+                    </li>
+                  </Link>
+                ))}
             </ul>
           </nav>
         )}
@@ -140,6 +150,7 @@ export default function Home() {
                   <Route path="runner" element={<CanvasGame type="runner" />} />
                   <Route path="year" element={<Year />} />
                   <Route path="minecraft" element={<Minecraft />} />
+                  <Route path="workadventure" element={<Workadventure />} />
                   <Route path="valheim" element={<Valheim />} />
                   <Route path="admin" element={<Admin />} />
                   <Route path="meetings" element={<Meetings />} />
@@ -156,6 +167,9 @@ export default function Home() {
               )}
               {groups.includes("minecraft") && (
                 <Route path="minecraft" element={<Valheim />} />
+              )}
+              {groups.includes("workadventure") && (
+                <Route path="workadventure" element={<Workadventure />} />
               )}
             </Routes>
           </div>
