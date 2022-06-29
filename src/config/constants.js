@@ -41,4 +41,5 @@ export const CANVAS_ITEMS = [
   "clock",
   "stars",
   "runner",
+  "carpet",
 ];

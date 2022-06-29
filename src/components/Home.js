@@ -148,6 +148,7 @@ export default function Home() {
                   <Route path="clock" element={<CanvasGame type="clock" />} />
                   <Route path="stars" element={<CanvasGame type="stars" />} />
                   <Route path="runner" element={<CanvasGame type="runner" />} />
+                  <Route path="carpet" element={<CanvasGame type="carpet" />} />
                   <Route path="year" element={<Year />} />
                   <Route path="minecraft" element={<Minecraft />} />
                   <Route path="workadventure" element={<Workadventure />} />

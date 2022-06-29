@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import balls from "./balls/balls";
-import planets from "./planets/planets";
-import cube from "./cube/cube";
-import ray from "./ray/ray";
+import carpet from "./carpet/carpet";
 import clock from "./clock/clock";
-import stars from "./stars/stars";
+import cube from "./cube/cube";
+import planets from "./planets/planets";
+import ray from "./ray/ray";
 import runner from "./runner/runner";
+import stars from "./stars/stars";
 
 export default function CanvasGame({ type }) {
   useEffect(() => {
@@ -33,6 +34,9 @@ export default function CanvasGame({ type }) {
         break;
       case "balls":
         game = balls(type);
+        break;
+      case "carpet":
+        game = carpet(type);
         break;
       default:
         game = planets(type);
