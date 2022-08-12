@@ -15,7 +15,6 @@ import Note from "./notes/NoteIndex";
 import Sensor from "./sensors/Sensor";
 import Todo from "./todo/Todo";
 import Valheim from "./valheim/Valheim";
-import Workadventure from "./workadventure/Workadventure";
 import Year from "./year/Year";
 import axios from "axios";
 
@@ -115,14 +114,6 @@ export default function Home() {
                     </li>
                   </Link>
                 ))}
-              {groups.includes("workadventure") &&
-                ["Workadventure"].map((text, index) => (
-                  <Link to={`/${text.toLocaleLowerCase()}`} key={index}>
-                    <li key={index} onClick={hideNavbar}>
-                      {text}
-                    </li>
-                  </Link>
-                ))}
             </ul>
           </nav>
         )}
@@ -151,7 +142,6 @@ export default function Home() {
                   <Route path="carpet" element={<CanvasGame type="carpet" />} />
                   <Route path="year" element={<Year />} />
                   <Route path="minecraft" element={<Minecraft />} />
-                  <Route path="workadventure" element={<Workadventure />} />
                   <Route path="valheim" element={<Valheim />} />
                   <Route path="admin" element={<Admin />} />
                   <Route path="meetings" element={<Meetings />} />
@@ -168,9 +158,6 @@ export default function Home() {
               )}
               {groups.includes("minecraft") && (
                 <Route path="minecraft" element={<Valheim />} />
-              )}
-              {groups.includes("workadventure") && (
-                <Route path="workadventure" element={<Workadventure />} />
               )}
             </Routes>
           </div>
