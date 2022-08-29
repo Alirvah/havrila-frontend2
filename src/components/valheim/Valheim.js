@@ -14,12 +14,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
+import Donate from "../../helper/Donation";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import StopIcon from "@mui/icons-material/Stop";
 import axios from "axios";
-
 import { useSelector } from "react-redux";
-import Donate from "../../helper/Donation";
 
 const useStyles = {
   parrent: {
@@ -227,7 +226,7 @@ const Minecraft = () => {
               {state.type}
             </li>
           </ul>
-          <Donate />
+          {/*<Donate />*/}
           <Typography>{message}</Typography>
           {error && <Typography className={classes.error}>{error}</Typography>}
           {message && (
